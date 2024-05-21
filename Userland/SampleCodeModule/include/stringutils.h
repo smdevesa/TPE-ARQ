@@ -13,4 +13,25 @@
  */
 size_t strlen(const char *str);
 
+/**
+ * @brief Copies a null-terminated string.
+ * @param dest The destination buffer.
+ * @param src The source buffer.
+ */
+void strcpy(char *dest, const char *src);
+
+/**
+ * @brief Copies a null-terminated string up to n characters.
+ * @param dest The destination buffer.
+ * @param src The source buffer.
+ * @param n The number of characters to copy.
+ */
+void strncpy(char *dest, const char *src, size_t n);
+
+/**
+ * @brief Reverses a null-terminated string.
+ * @param str The string to reverse.
+ */
+void reverse(char *str);
+
 #endif //TPE_ARQ_STRINGUTILS_H

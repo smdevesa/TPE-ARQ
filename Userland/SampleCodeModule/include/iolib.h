@@ -23,7 +23,7 @@ char getchar();
 void putchar(char c);
 
 /**
- * Reads until the user enters a newline or the buffer is full.
+ * Reads from STDIN until the user enters a newline or the buffer is full.
  * @param buffer The buffer to store the line.
  * @param size The size of the buffer.
  * @return A null-terminated string with the line read.
@@ -31,9 +31,35 @@ void putchar(char c);
 char * fgets(char *buffer, size_t size);
 
 /**
- * Writes a null-terminated string to the standard output.
- * @param str The string to write.
+ * @brief Prints a formatted string to the standard output.
+ * @param fmt The format string.
+ * @param ... The arguments to replace the format specifiers.
+ * @return The number of characters printed.
  */
-void printf(const char * str);
+int printf(const char * fmt, ...);
+
+/**
+ * @brief Reads formatted input from the standard input.
+ * @param fmt The format string.
+ * @param ... The variables pointers to store the input.
+ * @return The number of variables read.
+ */
+int scanf(const char * fmt, ...);
+
+/**
+ * Converts a integer to a string.
+ * @param num The integer to convert.
+ * @param str The buffer to store the string.
+ */
+char * itoa(int num, char * str);
+
+/**
+ * Converts a string to an integer.
+ * @param str The string to convert.
+ * @return The integer value.
+ */
+int atoi(const char * str);
+
+
 
 #endif
