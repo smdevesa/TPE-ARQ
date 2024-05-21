@@ -12,8 +12,7 @@ GLOBAL _irq02Handler
 GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
-
-GLOBAL _int80Handler
+GLOBAL _irq80Handler
 
 GLOBAL _exception0Handler
 
@@ -24,7 +23,6 @@ EXTERN exceptionDispatcher
 SECTION .text
 
 %macro pushState 0
-	push rax
 	push rbx
 	push rcx
 	push rdx
@@ -56,7 +54,6 @@ SECTION .text
 	pop rdx
 	pop rcx
 	pop rbx
-	pop rax
 %endmacro
 
 %macro irqHandlerMaster 1
@@ -140,7 +137,7 @@ _irq05Handler:
 	irqHandlerMaster 5
 
 ;Syscall
-_int80Handler:
+_irq80Handler:
     pushState
     mov r9, rax
     call syscallDispatcher

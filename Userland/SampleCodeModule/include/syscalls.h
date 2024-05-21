@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
-uint64_t _s_write(int fd, const char * buffer, int count, uint32_t color);
+uint64_t _sys_read(int fd, char * buffer, int count);
+
+uint64_t _sys_write(int fd, const char * buffer, int count, uint32_t color);
 
 #endif

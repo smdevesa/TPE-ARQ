@@ -1,14 +1,31 @@
 #include <syscall_lib.h>
 #include <videoDriver.h>
+#include <keyboardDriver.h>
 #include <font.h>
 
+#define STDIN 0
 #define STDOUT 1
 
 // Positioning variables
 static uint16_t print_x = 0;
 static uint16_t print_y = 0;
 
-int printSpecialCases(char c);
+static int printSpecialCases(char c);
+
+uint64_t sys_read(int fd, char * buffer, int count) {
+    // STDIN is the only file descriptor supported so far
+    if(fd != STDIN) {
+        return 0;
+    }
+    for(int i = 0; i < count; i++) {
+        char c = kb_getchar();
+        if(c == 0) {
+            return i;
+        }
+        buffer[i] = c;
+    }
+    return count;
+}
 
 uint64_t sys_write(int fd, const char * buffer, int count, uint32_t color) {
     // STDOUT is the only file descriptor supported so far
@@ -36,7 +53,7 @@ uint64_t sys_write(int fd, const char * buffer, int count, uint32_t color) {
     return 0;
 }
 
-int printSpecialCases(char c) {
+static int printSpecialCases(char c) {
     switch (c) {
         case '\n':
             print_x = 0;

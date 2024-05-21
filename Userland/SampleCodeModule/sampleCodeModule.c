@@ -1,11 +1,14 @@
 /* sampleCodeModule.c */
 
 #include <syscalls.h>
+#include <iolib.h>
 
 int main() {
-    char * msg = "Hello, World!";
-    while(1) {
-        _sys_write(1, msg, 13, 0x00FFFFFF);
-    }
+    // test for fgets
+    printf("Enter a string: \n");
+    char buffer[100];
+    fgets(buffer, 100);
+    printf("You entered: ");
+    printf(buffer);
     return 0;
 }

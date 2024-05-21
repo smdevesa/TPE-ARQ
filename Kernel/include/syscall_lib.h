@@ -3,8 +3,16 @@
 
 #include <stdint.h>
 
-/*
- * Writes a string to the standard output.
+/**
+ * @brief Reads a string from the standard input.
+ * @param buffer: the buffer to store the string.
+ * @param count: the number of chars to read.
+ * @return the number of chars read.
+ */
+uint64_t sys_read(int fd, char * buffer, int count);
+
+/**
+ * @brief Writes a string to the standard output.
  * @param buffer: the string to write.
  * @param count: the number of chars to write.
  * @param color: the color of the string in hexadecimal. Usage: 0x00RRGGBB.

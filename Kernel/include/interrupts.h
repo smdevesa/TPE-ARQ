@@ -19,7 +19,7 @@ void _irq04Handler(void);  // Unused
 void _irq05Handler(void);  // Unused
 
 // Software interrupts handlers
-void _int80Handler(void);  // System calls
+void _irq80Handler(void);  // System calls
 
 
 

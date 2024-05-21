@@ -1,4 +1,6 @@
 GLOBAL cpuVendor
+GLOBAL _getScancode
+GLOBAL _checkKeyboardBuffer
 
 section .text
 	
@@ -25,3 +27,8 @@ cpuVendor:
 	mov rsp, rbp
 	pop rbp
 	ret
+
+_getScancode:
+    xor rax, rax
+    in al, 0x60
+    ret
