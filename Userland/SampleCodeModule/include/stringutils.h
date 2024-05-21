@@ -7,6 +7,10 @@
 
 #include <stddef.h>
 
+/**
+ * @brief Returns the length of a null-terminated string.
+ * @param str
+ */
 size_t strlen(const char *str);
 
 #endif //TPE_ARQ_STRINGUTILS_H
