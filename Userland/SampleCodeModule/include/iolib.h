@@ -6,6 +6,7 @@
 #define TPE_ARQ_STDIO_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 #define STDIN 0
 #define STDOUT 1
@@ -51,6 +52,13 @@ int scanf(const char * fmt, ...);
  * @param str The string to write.
  */
 void puts(const char * str);
+
+/**
+ * Writes a colored string to the standard output.
+ * @param str The string to write.
+ * @param color The color of the string in hexadecimal. Usage: 0x00RRGGBB.
+ */
+void printStringColor(const char * str, uint32_t color);
 
 /**
  * Converts a integer to a string.

@@ -10,6 +10,8 @@
 #define CLEAR_IDX 1
 #define EXIT_IDX 2
 
+#define HELP_SECONDARY_COLOR 0x00F5ED51
+
 static char * commands[][2] = {
         {"help", "Shows the available commands."},
         {"clear", "Clears the screen."},
@@ -32,7 +34,8 @@ static int (*commandFunctions[])(int argc, char * argv[]) = {
 
 static int helpCommand(int argc, char * argv[]) {
     for(int i=0; i<COMMANDS_COUNT; i++) {
-        printf("%s: %s\n", commands[i][0], commands[i][1]);
+        printStringColor(commands[i][0], HELP_SECONDARY_COLOR);
+        printf(": %s\n", commands[i][1]);
     }
     return OK;
 }

@@ -12,6 +12,8 @@
 
 #define CURSOR_COLOR CYAN
 #define SCREEN_COLOR BLACK
+#define USER_COLOR 0x0000AFFF
+#define USER_SEPARATOR_COLOR 0x005FD700
 
 static void printUser();
 static void getInputAndPrint(char * input);
@@ -75,7 +77,9 @@ void setUsername(char * user) {
 }
 
 static void printUser() {
-    printf("%s@os:$ ", username);
+    printStringColor(username, USER_COLOR);
+    printStringColor("@os:", USER_COLOR);
+    printStringColor("$ ", USER_SEPARATOR_COLOR);
 }
 
 static void clearInput(char * input) {

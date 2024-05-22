@@ -30,6 +30,12 @@ void putcharColor(char c, uint32_t color) {
     _sys_write(STDOUT, &c, 1, color);
 }
 
+void printStringColor(const char * str, uint32_t color) {
+    for(int i=0; str[i] != 0; i++) {
+        putcharColor(str[i], color);
+    }
+}
+
 void putchar(char c) {
     putcharColor(c, WHITE);
 }
