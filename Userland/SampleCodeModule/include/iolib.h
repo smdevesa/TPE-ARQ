@@ -47,6 +47,12 @@ int printf(const char * fmt, ...);
 int scanf(const char * fmt, ...);
 
 /**
+ * Writes a string to the standard output with a line break.
+ * @param str The string to write.
+ */
+void puts(const char * str);
+
+/**
  * Converts a integer to a string.
  * @param num The integer to convert.
  * @param str The buffer to store the string.
@@ -60,6 +66,34 @@ char * itoa(int num, char * str);
  */
 int atoi(const char * str);
 
+/**
+ * @return The current cursor x position.
+ */
+unsigned int getCursorX();
 
+/**
+ * @return The current cursor y position.
+ */
+unsigned int getCursorY();
+
+/**
+ * @brief Clears the screen and resets the cursor to the origin of coordinates.
+ */
+void clearScreen();
+
+/**
+ * @brief Draws a rectangle in the screen on the given coordinates.
+ * @param x top left corner x coordinate of the rectangle.
+ * @param y top left corner y coordinate of the rectangle.
+ * @param width width of the rectangle in pixels.
+ * @param height height of the rectangle in pixels.
+ * @param color the color of the rectangle in hexadecimal. Usage: 0x00RRGGBB.
+ */
+void printRectangle(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int color);
+
+/**
+ * @brief Erases the last character drawn.
+ */
+void undrawChar();
 
 #endif

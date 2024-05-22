@@ -26,11 +26,14 @@ static int readToBlank(char * str, int index) {
     return readBytes;
 }
 
-void putcharColor(char c, char color) {
+void putcharColor(char c, uint32_t color) {
     _sys_write(STDOUT, &c, 1, color);
 }
 
 void putchar(char c) {
+    if(c == '\b') {
+        return;
+    }
     putcharColor(c, WHITE);
 }
 
@@ -173,3 +176,29 @@ int scanf(const char *fmt, ...) {
     return count;
 }
 
+void puts(const char *str) {
+    for(int i=0; str[i] != 0; i++) {
+        putchar(str[i]);
+    }
+    putchar('\n');
+}
+
+unsigned int getCursorX() {
+    return _sys_getCoords() & 0xFFFFFFFF;
+}
+
+unsigned int getCursorY() {
+    return _sys_getCoords() >> 32;
+}
+
+void drawRectangle(uint32_t hexColor, uint64_t x, uint64_t y, uint64_t width, uint64_t height) {
+    _sys_drawRectangle(hexColor, x, y, width, height);
+}
+
+void clearScreen() {
+    _sys_clearScreen();
+}
+
+void undrawChar() {
+    _sys_undrawChar();
+}

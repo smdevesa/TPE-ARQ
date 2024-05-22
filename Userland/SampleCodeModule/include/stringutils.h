@@ -21,6 +21,14 @@ size_t strlen(const char *str);
 void strcpy(char *dest, const char *src);
 
 /**
+ * @brief Compares two null-terminated strings.
+ * @param str1 The first string.
+ * @param str2 The second string.
+ * @return 0 if the strings are equal, a negative number if str1 is less than str2, a positive number if str1 is greater than str2.
+ */
+int strcmp(const char *str1, const char *str2);
+
+/**
  * @brief Copies a null-terminated string up to n characters.
  * @param dest The destination buffer.
  * @param src The source buffer.

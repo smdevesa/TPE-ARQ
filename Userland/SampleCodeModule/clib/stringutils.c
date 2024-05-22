@@ -4,9 +4,15 @@
 
 #include <stringutils.h>
 
+typedef struct strtok_t {
+    char * str;
+    const char *delim;
+    char * next;
+} strtok_t;
+
 size_t strlen(const char *str) {
     size_t len = 0;
-    while(str[len] != '\0') {
+    while(str[len] != 0) {
         len++;
     }
     return len;
@@ -14,7 +20,7 @@ size_t strlen(const char *str) {
 
 void strcpy(char *dest, const char *src) {
     size_t i = 0;
-    while(src[i] != '\0') {
+    while(src[i] != 0) {
         dest[i] = src[i];
         i++;
     }
@@ -37,4 +43,13 @@ void reverse(char *str) {
         str[i] = str[len - i - 1];
         str[len - i - 1] = temp;
     }
+}
+
+int strcmp(const char *str1, const char *str2) {
+    for(int i=0, j=0; str1[i] != 0 || str2[j] != 0; i++, j++) {
+        if(str1[i] != str2[j]) {
+            return str1[i] - str2[j];
+        }
+    }
+    return 0;
 }

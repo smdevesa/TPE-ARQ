@@ -1,6 +1,8 @@
 #include <videoDriver.h>
 #include <font.h>
 
+#define BLACK 0x00000000
+
 struct vbe_mode_info_structure {
 	uint16_t attributes;		// deprecated, only bit 7 should be of interest to you, and it indicates the mode supports a linear frame buffer.
 	uint8_t window_a;			// deprecated
@@ -76,4 +78,21 @@ void drawChar(char c, uint32_t charColor, uint32_t bgColor, uint64_t x, uint64_t
             }
         }
     }
+}
+
+int drawRectangle(uint32_t hexColor, uint64_t x, uint64_t y, uint64_t width, uint64_t height) {
+    // No space to draw the rectangle.
+    if((x + width) > getScreenWidth() || (y + height) > getScreenHeight())
+        return 0;
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            drawPixel(hexColor, x + j, y + i);
+        }
+    }
+    return 1;
+}
+
+void clearScreen() {
+    drawRectangle(BLACK, 0, 0, getScreenWidth(), getScreenHeight());
 }

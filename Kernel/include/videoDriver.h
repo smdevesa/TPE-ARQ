@@ -25,6 +25,22 @@ void drawPixel(uint32_t hexColor, uint64_t x, uint64_t y);
 void drawChar(char c, uint32_t charColor, uint32_t bgColor, uint64_t x, uint64_t y);
 
 /**
+ * @brief Draws a rectangle in the screen on the given coordinates.
+ * @param hexColor: the color of the rectangle in hexadecimal. Usage: 0x00RRGGBB.
+ * @param x: the x coordinate of the rectangle.
+ * @param y: the y coordinate of the rectangle.
+ * @param width: the width of the rectangle.
+ * @param height: the height of the rectangle.
+ * @return 0 if the rectangle was drawn successfully, 1 if the rectangle was out of bounds.
+ */
+int drawRectangle(uint32_t hexColor, uint64_t x, uint64_t y, uint64_t width, uint64_t height);
+
+/**
+ * @brief Clears the screen.
+ */
+void clearScreen();
+
+/**
  * @brief Returns the width of the screen in pixels.
  */
 uint16_t getScreenWidth();

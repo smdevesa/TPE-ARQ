@@ -4,55 +4,70 @@
 
 #include <shell.h>
 #include <iolib.h>
-#include <string.h>
+#include <stringutils.h>
 #include <stddef.h>
-
-#define MAX_COMMAND_SIZE 30
-#define MAX_ARGS 3
-
-// Commands
-char * commands[] = {
-    "help",
-    "exit"
-};
-
-// Help messages
-char * help[] = {
-    "help - Shows this message.",
-    "exit - Exits the shell."
-};
+#include <commands.h>
 
 static void printUser();
-static void parseCommand(char * command, char * args[]);
-static void fillCommandAndArgs(char * args[], char * input);
+static void getInputAndPrint(char * input);
+static void clearInput(char * input);
 
-static char * username;
+        static char * username;
 
 void shell() {
+    char input[MAX_COMMAND_SIZE];
+    char copy[MAX_COMMAND_SIZE];
+    int returned;
+
     if(username == NULL) {
         // Default username
         setUsername("user");
     }
 
     // Main loop
-    while(1) {
+    while(returned != EXIT) {
         printUser();
-        fgets(input, MAX_COMMAND_SIZE);
-        parseCommand(input, args);
+        getInputAndPrint(input);
+        putchar('\n');
+        strcpy(copy, input);
+        returned = parseCommand(copy);
+        if(returned == INPUT_ERROR) {
+            puts("Invalid command. Type 'help' to see the available commands.");
+            printf("Input: %s\n", input);
+        }
+        clearInput(input);
     }
+}
+
+static void getInputAndPrint(char * input) {
+    char c;
+    int i=0;
+    while((c = getchar()) != '\n') {
+        if(c != '\b') {
+            if(i < (MAX_COMMAND_SIZE-1))
+                input[i++] = c;
+            putchar(c);
+        }
+        else {
+            if(i > 0) {
+                i--;
+                undrawChar();
+            }
+        }
+    }
+    input[i] = 0;
 }
 
 void setUsername(char * user) {
     username = user;
 }
 
-static void fillCommandAndArgs(char * args[], char * command, char * input) {
-    int inputIndex = 0;
-    for(int i = 0; i < MAX_ARGS; i++) {
-
-    }
-}
-
 static void printUser() {
     printf("%s@os:>$ ", username);
+}
+
+static void clearInput(char * input) {
+    for(int i=0; i<MAX_COMMAND_SIZE; i++) {
+        input[i] = 0;
+    }
 }

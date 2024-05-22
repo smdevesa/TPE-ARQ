@@ -6,6 +6,8 @@
 #define STDIN 0
 #define STDOUT 1
 
+#define BLACK 0x00000000
+
 // Positioning variables
 static uint16_t print_x = 0;
 static uint16_t print_y = 0;
@@ -65,4 +67,33 @@ static int printSpecialCases(char c) {
         default:
             return 0;
     }
+}
+
+uint64_t sys_drawRectangle(uint32_t hexColor, uint64_t x, uint64_t y, uint64_t width, uint64_t height) {
+    return drawRectangle(hexColor, x, y, width, height);
+}
+
+uint64_t sys_getCoords() {
+    // Return the y in the high 32 bits and the x in the low 32 bits
+    return ((uint64_t) print_y << 32) | print_x;
+}
+
+uint64_t sys_clearScreen() {
+    clearScreen();
+    print_x = 0;
+    print_y = 0;
+    return 0;
+}
+
+uint64_t sys_undrawChar() {
+    if(print_x == 0 && print_y == 0) {
+        return 0;
+    }
+    print_x -= getFontWidth();
+    if(print_x < 0) {
+        print_x = getScreenWidth() - getFontWidth();
+        print_y -= getFontHeight();
+    }
+    drawChar(' ', BLACK, BLACK, print_x, print_y);
+    return 1;
 }

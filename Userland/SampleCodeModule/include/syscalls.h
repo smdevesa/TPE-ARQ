@@ -7,8 +7,51 @@
 
 #include <stdint.h>
 
+/**
+ * @brief Reads a string from the file descriptor.
+ * @param fd file descriptor
+ * @param buffer the buffer to store the string.
+ * @param count the number of bytes to read.
+ * @return the number of bytes read.
+ */
 uint64_t _sys_read(int fd, char * buffer, int count);
 
+/**
+ * @brief Writes a string to the file descriptor.
+ * @param fd file descriptor
+ * @param buffer the string to write.
+ * @param count the number of bytes to write.
+ * @param color the color of the string in hexadecimal. Usage: 0x00RRGGBB.
+ * @return the number of bytes written.
+ */
 uint64_t _sys_write(int fd, const char * buffer, int count, uint32_t color);
+
+
+/**
+ * @brief Draws a rectangle in the screen on the given coordinates.
+ * @param hexColor the color of the rectangle in hexadecimal. Usage: 0x00RRGGBB.
+ * @param x top left corner x coordinate of the rectangle.
+ * @param y top left corner y coordinate of the rectangle.
+ * @param width width of the rectangle in pixels.
+ * @param height height of the rectangle in pixels.
+ * @return 0 if the rectangle was drawn successfully, 1 if the rectangle was out of bounds.
+ */
+uint64_t _sys_drawRectangle(uint32_t hexColor, uint64_t x, uint64_t y, uint64_t width, uint64_t height);
+
+/**
+ * @brief Clears the screen and resets the cursor to the origin of coordinates.
+ */
+uint64_t _sys_clearScreen();
+
+/**
+ * @brief Returns the current cursor position.
+ * @return the current cursor y position in the higher 32 bits and the x position in the lower 32 bits.
+ */
+uint64_t _sys_getCoords();
+
+/**
+ * @brief Deletes the last character drawn.
+ */
+uint64_t _sys_undrawChar();
 
 #endif

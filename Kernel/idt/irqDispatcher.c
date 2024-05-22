@@ -2,15 +2,18 @@
 #include <stdint.h>
 #include <keyboardDriver.h>
 
+#define TIMERTICK 0
+#define KEYBOARD 1
+
 static void int_20();
 static void int_21();
 
 void irqDispatcher(uint64_t irq) {
 	switch (irq) {
-		case 0:
+		case TIMERTICK:
 			int_20();
 			break;
-        case 1:
+        case KEYBOARD:
             int_21();
             break;
 	}
