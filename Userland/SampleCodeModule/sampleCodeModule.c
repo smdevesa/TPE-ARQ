@@ -1,8 +1,9 @@
 /* sampleCodeModule.c */
 
-#include <iolib.h>
+#include <shell.h>
 
 int main() {
-
+    setUsername("Clifford");
+    shell();
     return 0;
 }

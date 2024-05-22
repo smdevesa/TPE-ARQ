@@ -26,8 +26,12 @@ static int readToBlank(char * str, int index) {
     return readBytes;
 }
 
+void putcharColor(char c, char color) {
+    _sys_write(STDOUT, &c, 1, color);
+}
+
 void putchar(char c) {
-    _sys_write(STDOUT, &c, 1, WHITE);
+    putcharColor(c, WHITE);
 }
 
 char * fgets(char *buffer, size_t size) {

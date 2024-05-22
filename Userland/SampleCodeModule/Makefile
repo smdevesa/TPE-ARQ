@@ -4,9 +4,11 @@ MODULE=0000-sampleCodeModule.bin
 SOURCES=$(wildcard [^_]*.c)
 SOURCES_ASM=$(wildcard asm/*.asm)
 SOURCES_CLIB=$(wildcard clib/*.c)
+SOURCES_SHELL=$(wildcard shell/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 OBJECTS_ASM=$(SOURCES_ASM:.asm=.o)
 OBJECTS_CLIB=$(SOURCES_CLIB:.c=.o)
+OBJECTS_SHELL=$(SOURCES_SHELL:.c=.o)
 
 LOADERSRC=_loader.c
 
@@ -15,8 +17,8 @@ STATICLIBS=
 
 all: $(MODULE)
 
-$(MODULE): $(LOADEROBJECT) $(OBJECTS) $(STATICLIBS) $(OBJECTS_ASM) $(OBJECTS_CLIB)
-	$(LD) $(LDFLAGS) -T sampleCodeModule.ld -o ../$(MODULE) $(LOADEROBJECT) $(OBJECTS) $(OBJECTS_ASM) $(OBJECTS_CLIB) $(STATICLIBS)
+$(MODULE): $(LOADEROBJECT) $(OBJECTS) $(STATICLIBS) $(OBJECTS_ASM) $(OBJECTS_CLIB) $(OBJECTS_SHELL)
+	$(LD) $(LDFLAGS) -T sampleCodeModule.ld -o ../$(MODULE) $(LOADEROBJECT) $(OBJECTS) $(OBJECTS_ASM) $(OBJECTS_CLIB) $(STATICLIBS) $(OBJECTS_SHELL)
 
 %.o: %.c
 	$(GCC) $(GCCFLAGS) -I./include -c $< -o $@
