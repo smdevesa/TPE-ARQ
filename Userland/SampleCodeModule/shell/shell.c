@@ -7,12 +7,18 @@
 #include <stringutils.h>
 #include <stddef.h>
 #include <commands.h>
+#include <color.h>
+#include <stdint.h>
+
+#define CURSOR_COLOR CYAN
+#define SCREEN_COLOR BLACK
 
 static void printUser();
 static void getInputAndPrint(char * input);
 static void clearInput(char * input);
+static void printCursor(uint32_t hexColor, size_t offsetX);
 
-        static char * username;
+static char * username;
 
 void shell() {
     char input[MAX_COMMAND_SIZE];
@@ -42,8 +48,10 @@ void shell() {
 static void getInputAndPrint(char * input) {
     char c;
     int i=0;
+    printCursor(CURSOR_COLOR, 0);
     while((c = getchar()) != '\n') {
         if(c != '\b') {
+            printCursor(CURSOR_COLOR, getFontWidth());
             if(i < (MAX_COMMAND_SIZE-1))
                 input[i++] = c;
             putchar(c);
@@ -51,10 +59,14 @@ static void getInputAndPrint(char * input) {
         else {
             if(i > 0) {
                 i--;
-                undrawChar();
+                putchar(c);
+                // we need to erase the cursor
+                printCursor(SCREEN_COLOR, getFontWidth());
+                printCursor(CURSOR_COLOR, 0);
             }
         }
     }
+    printCursor(SCREEN_COLOR, 0);
     input[i] = 0;
 }
 
@@ -63,11 +75,21 @@ void setUsername(char * user) {
 }
 
 static void printUser() {
-    printf("%s@os:>$ ", username);
+    printf("%s@os:$ ", username);
 }
 
 static void clearInput(char * input) {
     for(int i=0; i<MAX_COMMAND_SIZE; i++) {
         input[i] = 0;
     }
+}
+
+static void printCursor(uint32_t hexColor, size_t offsetX) {
+    uint32_t x = getCursorX() + offsetX;
+    uint32_t y = getCursorY();
+    if(x + getFontWidth() > getScreenWidth()) {
+        x = 0;
+        y += getFontHeight();
+    }
+    drawRectangle(hexColor, x, y, getFontWidth(), getFontHeight());
 }

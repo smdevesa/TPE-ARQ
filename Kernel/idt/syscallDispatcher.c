@@ -6,7 +6,9 @@
 #define RECTANGLE 2
 #define CLEAR 3
 #define COORDS 4
-#define UNDRAW 5
+#define SCREENINFO 5
+#define FONTINFO 6
+
 
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t rax) {
     // rax contains the syscall id
@@ -16,7 +18,8 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
         case RECTANGLE: return sys_drawRectangle(rdi, rsi, rdx, rcx, r8);
         case CLEAR: return sys_clearScreen();
         case COORDS: return sys_getCoords();
-        case UNDRAW: return sys_undrawChar();
+        case SCREENINFO: return sys_getScreenInfo();
+        case FONTINFO: return sys_getFontInfo();
         default: return 0;
     }
 }

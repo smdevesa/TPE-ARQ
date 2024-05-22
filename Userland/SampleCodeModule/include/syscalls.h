@@ -50,8 +50,13 @@ uint64_t _sys_clearScreen();
 uint64_t _sys_getCoords();
 
 /**
- * @brief Deletes the last character drawn.
+ * @brief Returns the screen width in the high 32 bits and the screen height in the low 32 bits.
  */
-uint64_t _sys_undrawChar();
+uint64_t _sys_getScreenInfo();
+
+/**
+ * @brief Returns the font width in the high 32 bits and the font height in the low 32 bits.
+ */
+uint64_t _sys_getFontInfo();
 
 #endif

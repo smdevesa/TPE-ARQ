@@ -92,8 +92,23 @@ void clearScreen();
 void printRectangle(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int color);
 
 /**
- * @brief Erases the last character drawn.
+ * @brief Returns the screen width in pixels.
  */
-void undrawChar();
+unsigned int getScreenWidth();
+
+/**
+ * @brief Returns the screen height in pixels.
+ */
+unsigned int getScreenHeight();
+
+/**
+ * @brief Returns the font width in pixels.
+ */
+unsigned int getFontWidth();
+
+/**
+ * @brief Returns the font height in pixels.
+ */
+unsigned int getFontHeight();
 
 #endif

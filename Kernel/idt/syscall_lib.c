@@ -64,6 +64,15 @@ static int printSpecialCases(char c) {
         case '\t':
             print_x += getFontWidth() * 4;
             return 1;
+        case '\b':
+            if(print_x > 0) {
+                print_x -= getFontWidth();
+            } else if(print_y > 0) {
+                print_y -= getFontHeight();
+                print_x = getScreenWidth() - getFontWidth();
+            }
+            drawChar(' ', BLACK, BLACK, print_x, print_y);
+            return 1;
         default:
             return 0;
     }
@@ -85,15 +94,12 @@ uint64_t sys_clearScreen() {
     return 0;
 }
 
-uint64_t sys_undrawChar() {
-    if(print_x == 0 && print_y == 0) {
-        return 0;
-    }
-    print_x -= getFontWidth();
-    if(print_x < 0) {
-        print_x = getScreenWidth() - getFontWidth();
-        print_y -= getFontHeight();
-    }
-    drawChar(' ', BLACK, BLACK, print_x, print_y);
-    return 1;
+uint64_t sys_getScreenInfo() {
+    // return the width in the high 32 bits and the height in the low 32 bits
+    return ((uint64_t) getScreenWidth() << 32) | getScreenHeight();
+}
+
+uint64_t sys_getFontInfo() {
+    // return the width in the high 32 bits and the height in the low 32 bits
+    return ((uint64_t) getFontWidth() << 32) | getFontHeight();
 }

@@ -47,4 +47,14 @@ uint64_t sys_getCoords();
  */
 uint64_t sys_undrawChar();
 
+/**
+ * @brief Returns the screen width in the high 32 bits and the screen height in the low 32 bits.
+ */
+uint64_t sys_getScreenInfo();
+
+/**
+ * @brief Returns the font width in the high 32 bits and the font height in the low 32 bits.
+ */
+uint64_t sys_getFontInfo();
+
 #endif

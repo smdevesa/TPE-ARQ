@@ -31,9 +31,6 @@ void putcharColor(char c, uint32_t color) {
 }
 
 void putchar(char c) {
-    if(c == '\b') {
-        return;
-    }
     putcharColor(c, WHITE);
 }
 
@@ -199,6 +196,18 @@ void clearScreen() {
     _sys_clearScreen();
 }
 
-void undrawChar() {
-    _sys_undrawChar();
+unsigned int getScreenWidth() {
+    return _sys_getScreenInfo() >> 32;
+}
+
+unsigned int getScreenHeight() {
+    return _sys_getScreenInfo() & 0xFFFFFFFF;
+}
+
+unsigned int getFontWidth() {
+    return _sys_getFontInfo() >> 32;
+}
+
+unsigned int getFontHeight() {
+    return _sys_getFontInfo() & 0xFFFFFFFF;
 }

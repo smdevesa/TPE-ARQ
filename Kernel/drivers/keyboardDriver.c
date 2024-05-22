@@ -8,8 +8,6 @@ static int cb_isEmpty();
 static char cb_push(char c);
 static char cb_pop();
 
-static int c = 0;
-
 /*
  * Keycode matrix:
  * in index zero the char without shift, in index 1 the char with shift

@@ -4,6 +4,8 @@ GLOBAL _sys_drawRectangle
 GLOBAL _sys_clearScreen
 GLOBAL _sys_getCoords
 GLOBAL _sys_undrawChar
+GLOBAL _sys_getScreenInfo
+GLOBAL _sys_getFontInfo
 
 section .text
 
@@ -18,4 +20,5 @@ _sys_write: syscall 0x01
 _sys_drawRectangle: syscall 0x02
 _sys_clearScreen: syscall 0x03
 _sys_getCoords: syscall 0x04
-_sys_undrawChar: syscall 0x05
+_sys_getScreenInfo: syscall 0x05
+_sys_getFontInfo: syscall 0x06
