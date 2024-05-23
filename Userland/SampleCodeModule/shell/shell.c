@@ -9,6 +9,7 @@
 #include <commands.h>
 #include <color.h>
 #include <stdint.h>
+#include <time.h>
 
 #define CURSOR_COLOR CYAN
 #define SCREEN_COLOR BLACK
@@ -53,6 +54,10 @@ static void getInputAndPrint(char * input) {
     printCursor(CURSOR_COLOR, 0);
     while((c = getchar()) != '\n') {
         if(c != '\b') {
+            // Replace tabs with spaces
+            if(c == '\t') {
+                c = ' ';
+            }
             printCursor(CURSOR_COLOR, getFontWidth());
             if(i < (MAX_COMMAND_SIZE-1))
                 input[i++] = c;
@@ -61,6 +66,8 @@ static void getInputAndPrint(char * input) {
         else {
             if(i > 0) {
                 i--;
+                uint32_t lastX = getCursorX();
+                uint32_t lastY = getCursorY();
                 putchar(c);
                 // we need to erase the cursor
                 printCursor(SCREEN_COLOR, getFontWidth());

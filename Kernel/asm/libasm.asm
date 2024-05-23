@@ -1,6 +1,7 @@
 GLOBAL cpuVendor
 GLOBAL _getScancode
 GLOBAL _checkKeyboardBuffer
+GLOBAL _readTime
 
 section .text
 	
@@ -31,4 +32,14 @@ cpuVendor:
 _getScancode:
     xor rax, rax
     in al, 0x60
+    ret
+
+_readTime:
+    push dx
+    mov dx, 0x70
+    mov al, dil
+    out dx, al
+    xor rax, rax
+    in al, 0x71
+    pop dx
     ret

@@ -2,6 +2,7 @@
 #include <videoDriver.h>
 #include <keyboardDriver.h>
 #include <font.h>
+#include <rtc.h>
 
 #define STDIN 0
 #define STDOUT 1
@@ -102,4 +103,8 @@ uint64_t sys_getScreenInfo() {
 uint64_t sys_getFontInfo() {
     // return the width in the high 32 bits and the height in the low 32 bits
     return ((uint64_t) getFontWidth() << 32) | getFontHeight();
+}
+
+uint64_t sys_getTime(uint64_t rdi) {
+    return getTime(rdi);
 }

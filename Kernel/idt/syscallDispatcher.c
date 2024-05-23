@@ -8,6 +8,7 @@
 #define COORDS 4
 #define SCREENINFO 5
 #define FONTINFO 6
+#define GETTIME 7
 
 
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t rax) {
@@ -20,6 +21,7 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
         case COORDS: return sys_getCoords();
         case SCREENINFO: return sys_getScreenInfo();
         case FONTINFO: return sys_getFontInfo();
+        case GETTIME: return sys_getTime(rdi);
         default: return 0;
     }
 }

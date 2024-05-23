@@ -43,11 +43,6 @@ uint64_t sys_clearScreen();
 uint64_t sys_getCoords();
 
 /**
- * @brief Deletes the last character drawn.
- */
-uint64_t sys_undrawChar();
-
-/**
  * @brief Returns the screen width in the high 32 bits and the screen height in the low 32 bits.
  */
 uint64_t sys_getScreenInfo();
@@ -56,5 +51,10 @@ uint64_t sys_getScreenInfo();
  * @brief Returns the font width in the high 32 bits and the font height in the low 32 bits.
  */
 uint64_t sys_getFontInfo();
+
+/**
+ * @brief Returns the time data of the current time read from the RTC.
+ */
+uint64_t sys_getTime(uint64_t rdi);
 
 #endif

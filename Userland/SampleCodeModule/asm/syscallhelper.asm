@@ -6,6 +6,7 @@ GLOBAL _sys_getCoords
 GLOBAL _sys_undrawChar
 GLOBAL _sys_getScreenInfo
 GLOBAL _sys_getFontInfo
+GLOBAL _sys_getTime
 
 section .text
 
@@ -22,3 +23,4 @@ _sys_clearScreen: syscall 0x03
 _sys_getCoords: syscall 0x04
 _sys_getScreenInfo: syscall 0x05
 _sys_getFontInfo: syscall 0x06
+_sys_getTime: syscall 0x07

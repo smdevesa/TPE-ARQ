@@ -7,6 +7,22 @@
 
 #include <stdint.h>
 
+/*
+ * Arguments used to read the RTC.
+ */
+#define SECONDS_ARG 0x00
+#define MINUTES_ARG 0x02
+#define HOURS_ARG 0x04
+#define DAY_ARG 0x07
+#define MONTH_ARG 0x08
+#define YEAR_ARG 0x09
+
+/*
+ * File descriptors.
+ */
+#define STDIN_FD 0x00
+#define STDOUT_FD 0x01
+
 /**
  * @brief Reads a string from the file descriptor.
  * @param fd file descriptor
@@ -58,5 +74,11 @@ uint64_t _sys_getScreenInfo();
  * @brief Returns the font width in the high 32 bits and the font height in the low 32 bits.
  */
 uint64_t _sys_getFontInfo();
+
+/**
+ * @brief Returns the data read from the RTC.
+ * @param arg the data to read. (Check defines above)
+ */
+uint64_t _sys_getTime(uint64_t arg);
 
 #endif
