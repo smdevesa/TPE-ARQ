@@ -8,6 +8,7 @@ GLOBAL _sys_getScreenInfo
 GLOBAL _sys_getFontInfo
 GLOBAL _sys_getTime
 GLOBAL _sys_setFontScale
+GLOBAL _sys_getRegisters
 
 section .text
 
@@ -26,3 +27,4 @@ _sys_getScreenInfo: syscall 0x05
 _sys_getFontInfo: syscall 0x06
 _sys_getTime: syscall 0x07
 _sys_setFontScale: syscall 0x08
+_sys_getRegisters: syscall 0x09

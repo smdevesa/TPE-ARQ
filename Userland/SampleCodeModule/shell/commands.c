@@ -6,6 +6,7 @@
 #include <iolib.h>
 #include <string.h>
 #include <time.h>
+#include <syscalls.h>
 
 #define HELP_IDX 0
 #define CLEAR_IDX 1
@@ -15,13 +16,13 @@
 #define ERROR_PRIMARY_COLOR 0x00B63831
 #define ERROR_SECONDARY_COLOR 0x00DD5E56
 
-
 static char * commands[][2] = {
         {"help", "Shows the available commands."},
         {"clear", "Clears the screen."},
         {"exit", "Exits the shell."},
         {"date", "Shows the current date and time."},
-        {"fontscale", "Sets the font scale. Usage: fontscale [1, 2, 3]"}
+        {"fontscale", "Sets the font scale. Usage: fontscale [1, 2, 3]"},
+        {"inforeg", "Shows the registers values."}
 };
 
 #define COMMANDS_COUNT (sizeof(commands) / sizeof(commands[0]))
@@ -31,6 +32,7 @@ static int clearCommand(int argc, char * argv[]);
 static int exitCommand(int argc, char * argv[]);
 static int dateCommand(int argc, char * argv[]);
 static int fontscaleCommand(int argc, char * argv[]);
+static int inforegCommand(int argc, char * argv[]);
 static int fillCommandAndArgs(char ** command, char * args[], char * input);
 static void printError(char * command, char * message, char * usage);
 
@@ -39,7 +41,12 @@ static int (*commandFunctions[])(int argc, char * argv[]) = {
     clearCommand,
     exitCommand,
     dateCommand,
-    fontscaleCommand
+    fontscaleCommand,
+    inforegCommand
+};
+
+static const char * regNames[REGS_AMOUNT] = {
+        "RAX", "RBX", "RCX", "RDX", "RSI", "RDI", "RBP", "R8 ", "R9 ", "R10", "R11", "R12", "R13", "R14", "R15", "RIP", "RSP"
 };
 
 static int helpCommand(int argc, char * argv[]) {
@@ -79,11 +86,34 @@ static int fontscaleCommand(int argc, char * argv[]) {
     return OK;
 }
 
+static int inforegCommand(int argc, char * argv[]) {
+    uint64_t regs[REGS_AMOUNT];
+    int ok = _sys_getRegisters(regs);
+    if(!ok) {
+        printError("inforeg", "Registers are not updated. Use CTRL + R to update.", NULL);
+        return ERROR;
+    }
+    for(int i=0; i<REGS_AMOUNT; i += 2) {
+        printStringColor(regNames[i], COMMAND_SECONDARY_COLOR);
+        printf(": %x\t", regs[i]);
+        if(i < (REGS_AMOUNT - 1)) {
+            printStringColor(regNames[i + 1], COMMAND_SECONDARY_COLOR);
+            printf(": %x\n", regs[i + 1]);
+        }
+        else
+            putchar('\n');
+    }
+    return OK;
+}
+
 static void printError(char * command, char * message, char * usage) {
     printf("%s: ", command);
     printStringColor("error: ", ERROR_SECONDARY_COLOR);
     printStringColor(message, ERROR_PRIMARY_COLOR);
-    printf("\nUsage: %s\n", usage);
+    if(usage != NULL)
+        printf("\nUsage: %s\n", usage);
+    else
+        putchar('\n');
 }
 
 int parseCommand(char * input) {

@@ -91,13 +91,13 @@ void clearScreen();
 
 /**
  * @brief Draws a rectangle in the screen on the given coordinates.
+ * @param color the color of the rectangle in hexadecimal. Usage: 0x00RRGGBB.
  * @param x top left corner x coordinate of the rectangle.
  * @param y top left corner y coordinate of the rectangle.
  * @param width width of the rectangle in pixels.
  * @param height height of the rectangle in pixels.
- * @param color the color of the rectangle in hexadecimal. Usage: 0x00RRGGBB.
  */
-void drawRectangle(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int color);
+void drawRectangle(uint32_t hexColor, uint64_t x, uint64_t y, uint64_t width, uint64_t height);
 
 /**
  * @brief Returns the screen width in pixels.

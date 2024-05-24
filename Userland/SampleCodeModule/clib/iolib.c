@@ -74,6 +74,23 @@ char * itoa(int num, char * str) {
     return str;
 }
 
+char * itoaHex(int num, char * str) {
+    int i = 0;
+    if (num == 0) {
+        str[i++] = '0';
+    }
+    else {
+        while (num != 0) {
+            int r = num % 16;
+            str[i++] = (r < 10) ? (r + '0') : (r - 10 + 'A');
+            num /= 16;
+        }
+    }
+    str[i] = 0;
+    reverse(str);
+    return str;
+}
+
 int printf(const char *fmt, ...) {
     int count = 0;
     va_list args;
@@ -83,6 +100,7 @@ int printf(const char *fmt, ...) {
     char buffer[PRINTF_BUFFER_SIZE];
     char *str;
     int num;
+    uint64_t hex;
 
     for (int i=0; fmt[i] != 0; i++) {
         if (fmt[i] == '%') {
@@ -108,6 +126,20 @@ int printf(const char *fmt, ...) {
                 case 'c':
                     putchar(va_arg(args, int));
                     count++;
+                    break;
+                case 'x':
+                    hex = va_arg(args, uint64_t);
+                    itoaHex(hex, buffer);
+                    putchar('0');
+                    putchar('x');
+                    int digits = 8 - strlen(buffer);
+                    for(int j=0; j<digits; j++) {
+                        putchar('0');
+                    }
+                    for (int j=0; buffer[j] != '\0'; j++) {
+                        putchar(buffer[j]);
+                        count++;
+                    }
                     break;
                 // No special format found
                 default:

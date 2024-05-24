@@ -118,3 +118,7 @@ uint64_t sys_getTime(uint64_t arg) {
 uint64_t sys_setFontScale(uint64_t scale) {
     return setScale(scale);
 }
+
+uint64_t sys_getRegisters(uint64_t * r) {
+    return getRegisters(r);
+}

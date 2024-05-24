@@ -3,6 +3,28 @@
 
 #include <stdint.h>
 
+#define REGS_AMOUNT 17
+
+enum registers_idx {
+    RAX_IDX = 0,
+    RBX_IDX,
+    RCX_IDX,
+    RDX_IDX,
+    RSI_IDX,
+    RDI_IDX,
+    RBP_IDX,
+    R8_IDX,
+    R9_IDX,
+    R10_IDX,
+    R11_IDX,
+    R12_IDX,
+    R13_IDX,
+    R14_IDX,
+    R15_IDX,
+    RIP_IDX,
+    RSP_IDX
+};
+
 /**
  * @brief Reads a string from the standard input.
  * @param buffer: the buffer to store the string.
@@ -62,5 +84,13 @@ uint64_t sys_getTime(uint64_t rdi);
  * @param rdi the scale to set.
  */
 uint64_t sys_setFontScale(uint64_t scale);
+
+/**
+ * @brief Fills the registers array with the current values of the registers.
+ * Registers must be updated with CTRL + R before calling this function.
+ * @param r: the array to fill with the registers. Be sure of having at least REGS_AMOUNT elements.
+ * @return 0 if the registers were filled successfully, 1 if the registers were not filled.
+ */
+uint64_t sys_getRegisters(uint64_t * r);
 
 #endif

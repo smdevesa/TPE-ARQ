@@ -1,12 +1,16 @@
 #include <keyboardDriver.h>
-#include <syscall_lib.h> // debug
+#include <syscall_lib.h>
 
 extern uint8_t _getScancode();
+extern void _updateRegisters();
+extern uint64_t * _getRegisters();
 static char scancodeToAscii(uint8_t scancode);
 static void updateFlags(uint8_t scancode);
 static int cb_isEmpty();
 static char cb_push(char c);
 static char cb_pop();
+static int cb_isfull();
+static void updateRegisters();
 
 /*
  * Keycode matrix:
@@ -43,12 +47,21 @@ static TCircularBuffer buffer = { .readIndex = 0, .writeIndex = 0, .size = 0 };
 // Special keys flags
 static volatile uint8_t activeShift = 0;
 static volatile uint8_t activeCapsLock = 0;
+static volatile uint8_t activeCtrl = 0;
+
+static volatile uint8_t registers[REGS_AMOUNT];
+
+static volatile uint8_t registersFilled = 0;
 
 void keyboard_handler() {
     uint8_t scancode = _getScancode();
     updateFlags(scancode);
     char ascii = scancodeToAscii(scancode);
-    if (ascii != 0) {
+    if(activeCtrl && (ascii == 'r' || ascii == 'R')) {
+        registersFilled = 1;
+        updateRegisters();
+    }
+    else if (ascii != 0) {
         cb_push(ascii);
     }
 }
@@ -69,10 +82,16 @@ static char scancodeToAscii(uint8_t scancode) {
 }
 
 static void updateFlags(uint8_t scancode) {
-    if (scancode == LSHIFT || scancode == RSHIFT) {
+    if (scancode == LCTRL) {
+        activeCtrl = 1;
+    }
+    else if (scancode == LCTRL_RELEASE) {
+        activeCtrl = 0;
+    }
+    else if (scancode == LSHIFT || scancode == RSHIFT) {
         activeShift = 1;
     }
-    else if (scancode == LSHIFT + RELEASE_OFFSET || scancode == RSHIFT + RELEASE_OFFSET) {
+    else if (scancode == (LSHIFT + RELEASE_OFFSET) || scancode == (RSHIFT + RELEASE_OFFSET)) {
         activeShift = 0;
     }
     else if (scancode == CAPSLOCK) {
@@ -86,7 +105,7 @@ static int cb_isEmpty() {
 
 static char cb_push(char c) {
     // If the buffer is full, don't push anything
-    if ((buffer.writeIndex + 1) % BUFFER_SIZE == buffer.readIndex) {
+    if (cb_isfull()) {
         return 0;
     }
     buffer.v[buffer.writeIndex] = c;
@@ -110,3 +129,21 @@ static char cb_pop() {
     buffer.size--;
     return c;
 }
+
+void updateRegisters() {
+    _updateRegisters();
+    for(int i = 0; i < REGS_AMOUNT; i++) {
+        registers[i] = _getRegisters()[i];
+    }
+}
+
+uint64_t getRegisters(uint64_t * r) {
+    if(!registersFilled) {
+        return 0;
+    }
+    for(int i = 0; i < REGS_AMOUNT; i++) {
+        r[i] = registers[i];
+    }
+    return 1;
+}
+
