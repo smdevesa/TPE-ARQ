@@ -17,7 +17,7 @@ static char * commands[][2] = {
         {"help", "Shows the available commands."},
         {"clear", "Clears the screen."},
         {"exit", "Exits the shell."},
-        {"time", "Shows the current time."}
+        {"date", "Shows the current date and time."}
 };
 
 #define COMMANDS_COUNT (sizeof(commands) / sizeof(commands[0]))
@@ -25,15 +25,14 @@ static char * commands[][2] = {
 static int helpCommand(int argc, char * argv[]);
 static int clearCommand(int argc, char * argv[]);
 static int exitCommand(int argc, char * argv[]);
-static int timeCommand(int argc, char * argv[]);
+static int dateCommand(int argc, char * argv[]);
 static int fillCommandAndArgs(char ** command, char * args[], char * input);
-static char * readToBlank(char * input);
 
 static int (*commandFunctions[])(int argc, char * argv[]) = {
         helpCommand,
         clearCommand,
         exitCommand,
-        timeCommand
+        dateCommand
 };
 
 static int helpCommand(int argc, char * argv[]) {
@@ -53,8 +52,7 @@ static int exitCommand(int argc, char * argv[]) {
     return EXIT;
 }
 
-static int timeCommand(int argc, char * argv[]) {
-    printStringColor("Current time: ", COMMAND_SECONDARY_COLOR);
+static int dateCommand(int argc, char * argv[]) {
     printf("%d/%d/%d %d:%d:%d\n", getDay(), getMonth(), getYear(), getHours(), getMinutes(), getSeconds());
     return OK;
 }
@@ -94,9 +92,7 @@ static int fillCommandAndArgs(char ** command, char * args[], char * input) {
         }
         current++;
     }
-    printf("Command: %s\n", *command);
     for(int i=0; i<argsCount; i++) {
-        printf("Arg %d: %s\n", i, args[i]);
     }
     return argsCount;
 }

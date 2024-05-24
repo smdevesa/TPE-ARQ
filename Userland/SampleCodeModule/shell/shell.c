@@ -13,8 +13,11 @@
 
 #define CURSOR_COLOR CYAN
 #define SCREEN_COLOR BLACK
+
 #define USER_COLOR 0x0000AFFF
 #define USER_SEPARATOR_COLOR 0x005FD700
+
+#define TAB_SIZE 4
 
 static void printUser();
 static void getInputAndPrint(char * input);
@@ -53,11 +56,16 @@ static void getInputAndPrint(char * input) {
     int i=0;
     printCursor(CURSOR_COLOR, 0);
     while((c = getchar()) != '\n') {
-        if(c != '\b') {
-            // Replace tabs with spaces
-            if(c == '\t') {
-                c = ' ';
+        if(c == '\t') {
+            for (int j = 0; j < TAB_SIZE; j++) {
+                putchar(' ');
+                if(i < (MAX_COMMAND_SIZE-1))
+                    input[i++] = ' ';
             }
+            printCursor(CURSOR_COLOR, getFontWidth());
+        }
+        else if(c != '\b') {
+            // Replace tabs with spaces
             printCursor(CURSOR_COLOR, getFontWidth());
             if(i < (MAX_COMMAND_SIZE-1))
                 input[i++] = c;
@@ -66,8 +74,6 @@ static void getInputAndPrint(char * input) {
         else {
             if(i > 0) {
                 i--;
-                uint32_t lastX = getCursorX();
-                uint32_t lastY = getCursorY();
                 putchar(c);
                 // we need to erase the cursor
                 printCursor(SCREEN_COLOR, getFontWidth());
