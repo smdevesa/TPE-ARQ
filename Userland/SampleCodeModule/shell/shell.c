@@ -11,6 +11,8 @@
 #include <stdint.h>
 #include <time.h>
 
+#define WELCOME_MESSAGE "Welcome to Clifford OS. Today is %d/%d/%d.\n"
+
 #define CURSOR_COLOR CYAN
 #define SCREEN_COLOR BLACK
 
@@ -21,12 +23,13 @@
 
 static void printUser();
 static void getInputAndPrint(char * input);
-static void clearInput(char * input);
 static void printCursor(uint32_t hexColor, size_t offsetX);
+static int noScreenSpace();
 
 static char * username;
 
 void shell() {
+    printf(WELCOME_MESSAGE, getDay(), getMonth(), getYear());
     char input[MAX_COMMAND_SIZE];
     char copy[MAX_COMMAND_SIZE];
     int returned;
@@ -38,15 +41,32 @@ void shell() {
 
     // Main loop
     while(returned != EXIT) {
+        if(noScreenSpace()) {
+            parseCommand("clear");
+        }
         printUser();
         getInputAndPrint(input);
-        putchar('\n');
-        strcpy(copy, input);
-        returned = parseCommand(copy);
-        if(returned == INPUT_ERROR) {
-            puts("Invalid command. Type 'help' to see the available commands.");
+        if(input != NULL && input[0] != '\n') {
+            putchar('\n');
+            strcpy(copy, input);
+            returned = parseCommand(copy);
+            if (returned == INPUT_ERROR) {
+                if(noScreenSpace())
+                    parseCommand("clear");
+                puts("Invalid command. Type 'help' to see the available commands.");
+            }
+            else if(noScreenSpace()) {
+                parseCommand("clear");
+                // Execute the command again
+                parseCommand(input);
+            }
         }
-        clearInput(input);
+        else {
+            if(noScreenSpace())
+                parseCommand("clear");
+            else
+                putchar('\n');
+        }
     }
 }
 
@@ -55,23 +75,23 @@ static void getInputAndPrint(char * input) {
     int i=0;
     printCursor(CURSOR_COLOR, 0);
     while((c = getchar()) != '\n') {
-        if(c == '\t') {
+        if (c == '\t') {
             for (int j = 0; j < TAB_SIZE; j++) {
                 putchar(' ');
-                if(i < (MAX_COMMAND_SIZE-1))
+                if (i < (MAX_COMMAND_SIZE - 1))
                     input[i++] = ' ';
             }
-            printCursor(CURSOR_COLOR, getFontWidth());
+            printCursor(CURSOR_COLOR, 0);
         }
-        else if(c != '\b') {
+        else if (c != '\b') {
             // Replace tabs with spaces
             printCursor(CURSOR_COLOR, getFontWidth());
-            if(i < (MAX_COMMAND_SIZE-1))
+            if (i < (MAX_COMMAND_SIZE - 1))
                 input[i++] = c;
             putchar(c);
         }
         else {
-            if(i > 0) {
+            if (i > 0) {
                 i--;
                 putchar(c);
                 // we need to erase the cursor
@@ -94,12 +114,6 @@ static void printUser() {
     printStringColor("$ ", USER_SEPARATOR_COLOR);
 }
 
-static void clearInput(char * input) {
-    for(int i=0; i<MAX_COMMAND_SIZE; i++) {
-        input[i] = 0;
-    }
-}
-
 static void printCursor(uint32_t hexColor, size_t offsetX) {
     uint32_t x = getCursorX() + offsetX;
     uint32_t y = getCursorY();
@@ -108,4 +122,8 @@ static void printCursor(uint32_t hexColor, size_t offsetX) {
         y += getFontHeight();
     }
     drawRectangle(hexColor, x, y, getFontWidth(), getFontHeight());
+}
+
+static int noScreenSpace() {
+    return (getCursorY() + getFontHeight()) > getScreenHeight();
 }

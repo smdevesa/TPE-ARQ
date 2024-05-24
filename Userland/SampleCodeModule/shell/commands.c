@@ -34,12 +34,12 @@ static int fontscaleCommand(int argc, char * argv[]);
 static int fillCommandAndArgs(char ** command, char * args[], char * input);
 static void printError(char * command, char * message, char * usage);
 
-        static int (*commandFunctions[])(int argc, char * argv[]) = {
-        helpCommand,
-        clearCommand,
-        exitCommand,
-        dateCommand,
-        fontscaleCommand
+static int (*commandFunctions[])(int argc, char * argv[]) = {
+    helpCommand,
+    clearCommand,
+    exitCommand,
+    dateCommand,
+    fontscaleCommand
 };
 
 static int helpCommand(int argc, char * argv[]) {
@@ -117,7 +117,9 @@ static int fillCommandAndArgs(char ** command, char * args[], char * input) {
         // Remove blanks
         if (*current == ' ') {
             *current = 0;
-            args[argsCount++] = current + 1;
+            if(*(current + 1) != 0 && *(current + 1) != ' ') {
+                args[argsCount++] = current + 1;
+            }
         }
         current++;
     }
@@ -125,4 +127,3 @@ static int fillCommandAndArgs(char ** command, char * args[], char * input) {
     }
     return argsCount;
 }
-

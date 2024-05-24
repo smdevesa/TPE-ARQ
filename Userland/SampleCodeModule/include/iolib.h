@@ -97,7 +97,7 @@ void clearScreen();
  * @param height height of the rectangle in pixels.
  * @param color the color of the rectangle in hexadecimal. Usage: 0x00RRGGBB.
  */
-void printRectangle(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int color);
+void drawRectangle(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int color);
 
 /**
  * @brief Returns the screen width in pixels.
