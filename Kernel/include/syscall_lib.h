@@ -57,4 +57,10 @@ uint64_t sys_getFontInfo();
  */
 uint64_t sys_getTime(uint64_t rdi);
 
+/**
+ * @brief Sets the font scale. Supported values are 1, 2 and 3.
+ * @param rdi the scale to set.
+ */
+uint64_t sys_setFontScale(uint64_t scale);
+
 #endif

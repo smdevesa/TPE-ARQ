@@ -3,6 +3,10 @@
 
 #define BLACK 0x00000000
 
+#define MIN_SCALE 1
+#define MAX_SCALE 3
+#define DEFAULT_SCALE 1
+
 struct vbe_mode_info_structure {
 	uint16_t attributes;		// deprecated, only bit 7 should be of interest to you, and it indicates the mode supports a linear frame buffer.
 	uint8_t window_a;			// deprecated
@@ -43,7 +47,23 @@ struct vbe_mode_info_structure {
 
 typedef struct vbe_mode_info_structure * VBEInfoPtr;
 
-VBEInfoPtr VBE_mode_info = (VBEInfoPtr) 0x0000000000005C00;
+static volatile VBEInfoPtr VBE_mode_info = (VBEInfoPtr) 0x0000000000005C00;
+
+static volatile int scale = DEFAULT_SCALE;
+
+static void drawScaledPixel(uint32_t hexColor, uint64_t x, uint64_t y);
+
+uint64_t setScale(uint64_t newScale) {
+    if(newScale >= MIN_SCALE && newScale <= MAX_SCALE) {
+        scale = newScale;
+        return 1;
+    }
+    return 0;
+}
+
+uint8_t getScale() {
+    return scale;
+}
 
 uint16_t getScreenWidth() {
     return VBE_mode_info->width;
@@ -61,22 +81,34 @@ void drawPixel(uint32_t hexColor, uint64_t x, uint64_t y) {
     framebuffer[offset+2]   =  (hexColor >> 16) & 0xFF;
 }
 
+static void drawScaledPixel(uint32_t hexColor, uint64_t x, uint64_t y) {
+    for (int i = 0; i < scale; i++) {
+        for (int j = 0; j < scale; j++) {
+            drawPixel(hexColor, x + i, y + j);
+        }
+    }
+}
+
 void drawChar(char c, uint32_t charColor, uint32_t bgColor, uint64_t x, uint64_t y) {
     uint8_t * charBitmap = getFontChar(c);
 
     // The character is not in the font.
-    if(charBitmap == NULL) return;
+    if(charBitmap == NULL)
+        return;
 
     for (int i = 0; i < getFontHeight(); i++) {
         for (int j = 0; j < getFontWidth(); j++) {
             // Check if the bit is set
             if ((charBitmap[i] >> (getFontWidth() - j - 1)) & 1) {
-                drawPixel(charColor, x + j, y + i);
+                drawScaledPixel(charColor, x, y);
             }
             else {
-                drawPixel(bgColor, x + j, y + i);
+                drawScaledPixel(bgColor, x, y);
             }
+            x += scale;
         }
+        x -= getFontWidth() * scale;
+        y += scale;
     }
 }
 

@@ -3,11 +3,16 @@
 //
 
 #include <font.h>
+#include <videoDriver.h>
 
-static const uint8_t font_width = 8;
-static const uint8_t font_height = 16;
-static const uint8_t min_char = ' '; // Espacio es el minimo caracter que la fuente puede representar
-static const uint8_t max_char = '~'; // ~ es el maximo caracter que la fuente puede representar
+#define MIN_CHAR ' '
+#define MAX_CHAR '~'
+
+#define DEFAULT_WIDTH 8
+#define DEFAULT_HEIGHT 16
+
+static uint8_t font_width = DEFAULT_WIDTH;
+static uint8_t font_height = DEFAULT_HEIGHT;
 
 static uint8_t fontBitmap[] =
         {
@@ -1827,8 +1832,8 @@ uint8_t getFontHeight() {
 }
 
 uint8_t * getFontChar(char c) {
-    if (c < min_char || c > max_char) {
+    if (c < MIN_CHAR || c > MAX_CHAR) {
         return NULL;
     }
-    return fontBitmap + (c - min_char) * font_height;
+    return fontBitmap + (c - MIN_CHAR) * font_height;
 }

@@ -217,3 +217,7 @@ unsigned int getFontWidth() {
 unsigned int getFontHeight() {
     return _sys_getFontInfo() & 0xFFFFFFFF;
 }
+
+int setFontScale(int scale) {
+    return _sys_setFontScale(scale);
+}

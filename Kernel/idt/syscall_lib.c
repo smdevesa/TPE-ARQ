@@ -7,6 +7,9 @@
 #define STDIN 0
 #define STDOUT 1
 
+#define TAB_SIZE 4
+
+#define WHITE 0x00FFFFFF
 #define BLACK 0x00000000
 
 // Positioning variables
@@ -35,20 +38,20 @@ uint64_t sys_write(int fd, const char * buffer, int count, uint32_t color) {
     if (fd == STDOUT) {
         for(int i = 0; i < count; i++) {
             // Check if the character fits in the screen
-            if ((print_x + getFontWidth()) > getScreenWidth()) {
+            if ((print_x + getFontWidth() * getScale()) > getScreenWidth()) {
                 print_x = 0;
-                print_y += getFontHeight();
+                print_y += getFontHeight() * getScale();
             }
 
-            if((print_y + getFontHeight()) > getScreenHeight()) {
+            if((print_y + getFontHeight() * getScale()) > getScreenHeight()) {
                 // No more space in the screen, return the number of characters written
                 return count;
             }
 
             // Check if the character is a special case
             if(!printSpecialCases(buffer[i])) {
-                drawChar(buffer[i], color, 0x00000000, print_x, print_y);
-                print_x += getFontWidth();
+                drawChar(buffer[i], color, BLACK, print_x, print_y);
+                print_x += getFontWidth() * getScale();
             }
         }
         return count;
@@ -60,17 +63,20 @@ static int printSpecialCases(char c) {
     switch (c) {
         case '\n':
             print_x = 0;
-            print_y += getFontHeight();
+            print_y += getFontHeight() * getScale();
             return 1;
         case '\t':
-            print_x += getFontWidth() * 4;
+            print_x += getFontWidth() * getScale() * TAB_SIZE;
             return 1;
         case '\b':
             if(print_x > 0) {
-                print_x -= getFontWidth();
-            } else if(print_y > 0) {
-                print_y -= getFontHeight();
-                print_x = getScreenWidth() - getFontWidth();
+                print_x -= getFontWidth() * getScale();
+            }
+            else if(print_y > 0) {
+                print_y -= getFontHeight() * getScale();
+                print_x = getScreenWidth() - getFontWidth() * getScale();
+                // Align the cursor to the previous line
+                print_x -= print_x % (getFontWidth() * getScale());
             }
             drawChar(' ', BLACK, BLACK, print_x, print_y);
             return 1;
@@ -102,9 +108,13 @@ uint64_t sys_getScreenInfo() {
 
 uint64_t sys_getFontInfo() {
     // return the width in the high 32 bits and the height in the low 32 bits
-    return ((uint64_t) getFontWidth() << 32) | getFontHeight();
+    return ((uint64_t) (getFontWidth() * getScale()) << 32) | (getFontHeight() * getScale());
 }
 
-uint64_t sys_getTime(uint64_t rdi) {
-    return getTime(rdi);
+uint64_t sys_getTime(uint64_t arg) {
+    return getTime(arg);
+}
+
+uint64_t sys_setFontScale(uint64_t scale) {
+    return setScale(scale);
 }

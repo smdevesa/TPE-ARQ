@@ -45,7 +45,6 @@ void shell() {
         returned = parseCommand(copy);
         if(returned == INPUT_ERROR) {
             puts("Invalid command. Type 'help' to see the available commands.");
-            printf("Input: %s\n", input);
         }
         clearInput(input);
     }

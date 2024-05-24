@@ -119,4 +119,11 @@ unsigned int getFontWidth();
  */
 unsigned int getFontHeight();
 
+/**
+ * @brief Sets the font scale. Supported values are 1, 2 and 3.
+ * @param scale the scale to set.
+ * @return 1 if the scale was set successfully, 0 if the scale is not supported.
+ */
+int setFontScale(int scale);
+
 #endif

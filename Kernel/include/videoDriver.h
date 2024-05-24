@@ -50,4 +50,16 @@ uint16_t getScreenWidth();
  */
 uint16_t getScreenHeight();
 
+/**
+ * @brief Sets the scale of the screen.
+ * @param newScale: the new scale of the screen (supported 1, 2 or 3).
+ * @return 1 if the scale was set successfully, 0 if the scale is not supported.
+ */
+uint64_t setScale(uint64_t newScale);
+
+/**
+ * @brief Returns the current scale of the screen.
+ */
+uint8_t getScale();
+
 #endif //TPE_ARQ_VIDEODRIVER_H
