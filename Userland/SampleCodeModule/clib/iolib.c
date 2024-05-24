@@ -74,17 +74,12 @@ char * itoa(int num, char * str) {
     return str;
 }
 
-char * itoaHex(int num, char * str) {
+char * itoaHex(uint64_t num, char * str) {
     int i = 0;
-    if (num == 0) {
-        str[i++] = '0';
-    }
-    else {
-        while (num != 0) {
-            int r = num % 16;
-            str[i++] = (r < 10) ? (r + '0') : (r - 10 + 'A');
-            num /= 16;
-        }
+    while (num != 0) {
+        int r = num % 16;
+        str[i++] = (r < 10) ? (r + '0') : (r - 10 + 'A');
+        num /= 16;
     }
     str[i] = 0;
     reverse(str);
@@ -132,11 +127,13 @@ int printf(const char *fmt, ...) {
                     itoaHex(hex, buffer);
                     putchar('0');
                     putchar('x');
-                    int digits = 8 - strlen(buffer);
-                    for(int j=0; j<digits; j++) {
+                    count += 2;
+                    int digits = 16 - strlen(buffer);
+                    for (int j = 0; j < digits; j++) {
                         putchar('0');
+                        count++;
                     }
-                    for (int j=0; buffer[j] != '\0'; j++) {
+                    for (int j = 0; buffer[j] != '\0'; j++) {
                         putchar(buffer[j]);
                         count++;
                     }

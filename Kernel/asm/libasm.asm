@@ -48,7 +48,7 @@ _readTime:
 
 _updateRegisters:
     mov [_registersMemory], rax
-    mov [_registersMemory + 8], rbx
+    mov [_registersMemory + 1*8], rbx
     mov [_registersMemory + 2*8], rcx
     mov [_registersMemory + 3*8], rdx
     mov [_registersMemory + 4*8], rsi
@@ -64,7 +64,8 @@ _updateRegisters:
     mov [_registersMemory + 14*8], r15
     mov rax, [rsp]
     mov [_registersMemory + 15*8], rax ; instruction pointer
-    mov [_registersMemory + 16*8], rsp
+    mov rax, rsp
+    mov [_registersMemory + 16*8], rax
     ret
 
 _getRegisters:
@@ -72,5 +73,4 @@ _getRegisters:
     ret
 
 section .bss
-
-_registersMemory resb 17*8
+_registersMemory: resq 17

@@ -132,8 +132,9 @@ static char cb_pop() {
 
 void updateRegisters() {
     _updateRegisters();
+    uint64_t * r = _getRegisters();
     for(int i = 0; i < REGS_AMOUNT; i++) {
-        registers[i] = _getRegisters()[i];
+        registers[i] = r[i];
     }
 }
 
