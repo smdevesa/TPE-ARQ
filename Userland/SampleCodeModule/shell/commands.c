@@ -36,6 +36,9 @@ static int inforegCommand(int argc, char * argv[]);
 static int fillCommandAndArgs(char ** command, char * args[], char * input);
 static void printError(char * command, char * message, char * usage);
 
+// Default scale
+static int scale = 1;
+
 static int (*commandFunctions[])(int argc, char * argv[]) = {
     helpCommand,
     clearCommand,
@@ -80,7 +83,8 @@ static int fontscaleCommand(int argc, char * argv[]) {
         printError("fontscale", "Invalid scale.", "fontscale [1, 2, 3]");
         return ERROR;
     }
-    int scale = atoi(argv[0]);
+    int newScale = atoi(argv[0]);
+    scale = newScale;
     setFontScale(scale);
     clearCommand(argc, argv);
     return OK;
@@ -93,6 +97,11 @@ static int inforegCommand(int argc, char * argv[]) {
         printError("inforeg", "Registers are not updated. Use CTRL + R to update.", NULL);
         return ERROR;
     }
+    char changed = 0;
+    if(scale == 3) {
+        changed = 1;
+        setFontScale(2);
+    }
     for(int i=0; i<REGS_AMOUNT; i += 2) {
         printStringColor(regNames[i], COMMAND_SECONDARY_COLOR);
         printf(": %x\t", regs[i]);
@@ -102,6 +111,9 @@ static int inforegCommand(int argc, char * argv[]) {
         }
         else
             putchar('\n');
+    }
+    if(changed) {
+        setFontScale(3);
     }
     return OK;
 }

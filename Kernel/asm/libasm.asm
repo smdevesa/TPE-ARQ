@@ -73,4 +73,4 @@ _getRegisters:
     ret
 
 section .bss
-_registersMemory: resq 17
+_registersMemory resq 17

@@ -49,7 +49,7 @@ static volatile uint8_t activeShift = 0;
 static volatile uint8_t activeCapsLock = 0;
 static volatile uint8_t activeCtrl = 0;
 
-static volatile uint8_t registers[REGS_AMOUNT];
+static volatile uint64_t registers[REGS_AMOUNT];
 
 static volatile uint8_t registersFilled = 0;
 
