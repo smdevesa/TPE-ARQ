@@ -13,3 +13,7 @@ int ticks_elapsed() {
 int seconds_elapsed() {
 	return ticks / 18;
 }
+
+uint64_t ms_elapsed() {
+    return ticks * 55;
+}

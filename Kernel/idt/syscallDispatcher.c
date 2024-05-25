@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <syscall_lib.h>
 
-enum syscalls {READ = 0, WRITE, RECTANGLE, CLEAR, COORDS, SCREENINFO, FONTINFO, GETTIME, SETSCALE, GETREGS};
+enum syscalls {READ = 0, WRITE, RECTANGLE, CLEAR, COORDS, SCREENINFO, FONTINFO, GETTIME, SETSCALE, GETREGS, SLEEP};
 
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t rax) {
     // rax contains the syscall id
@@ -16,6 +16,7 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
         case GETTIME: return sys_getTime(rdi);
         case SETSCALE: return sys_setFontScale(rdi);
         case GETREGS: return sys_getRegisters(rdi);
+        case SLEEP: return sys_sleep(rdi);
         default: return 0;
     }
 }

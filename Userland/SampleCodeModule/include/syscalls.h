@@ -120,4 +120,10 @@ uint64_t _sys_setFontScale(uint64_t scale);
  */
 uint64_t _sys_getRegisters(uint64_t * regs);
 
+/**
+ * @brief Sleeps the current process for the given amount of milliseconds.
+ * @param millis the amount of milliseconds to sleep.
+ */
+uint64_t _sys_sleep(uint64_t millis);
+
 #endif

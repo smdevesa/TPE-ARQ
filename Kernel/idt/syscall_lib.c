@@ -3,6 +3,8 @@
 #include <keyboardDriver.h>
 #include <font.h>
 #include <rtc.h>
+#include <time.h>
+#include <interrupts.h>
 
 #define STDIN 0
 #define STDOUT 1
@@ -121,4 +123,14 @@ uint64_t sys_setFontScale(uint64_t scale) {
 
 uint64_t sys_getRegisters(uint64_t * r) {
     return getRegisters(r);
+}
+
+uint64_t sys_sleep(uint64_t millis) {
+    unsigned long long initial_time = ms_elapsed();
+    unsigned long long currentTime = initial_time;
+    _sti();
+    while ((currentTime - initial_time) <= millis) {
+        currentTime = ms_elapsed();
+    }
+    _cli();
 }
