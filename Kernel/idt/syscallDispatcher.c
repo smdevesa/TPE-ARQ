@@ -15,7 +15,7 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
         case FONTINFO: return sys_getFontInfo();
         case GETTIME: return sys_getTime(rdi);
         case SETSCALE: return sys_setFontScale(rdi);
-        case GETREGS: return sys_getRegisters(rdi);
+        case GETREGS: return sys_getRegisters((uint64_t *) rdi);
         case SLEEP: return sys_sleep(rdi);
         default: return 0;
     }

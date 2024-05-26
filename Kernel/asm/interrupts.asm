@@ -77,12 +77,12 @@ SECTION .text
 %endmacro
 
 %macro exceptionHandler 1
-	pushState
+	pushState 1
 
 	mov rdi, %1 ; pasaje de parametro
 	call exceptionDispatcher
 
-	popState
+	popState 1
 	iretq
 %endmacro
 
