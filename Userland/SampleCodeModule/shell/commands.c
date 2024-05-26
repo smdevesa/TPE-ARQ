@@ -7,6 +7,7 @@
 #include <string.h>
 #include <time.h>
 #include <syscalls.h>
+#include <eliminator.h>
 
 #define HELP_IDX 0
 #define CLEAR_IDX 1
@@ -22,7 +23,8 @@ static char * commands[][2] = {
         {"exit", "Exits the shell."},
         {"date", "Shows the current date and time."},
         {"fontscale", "Sets the font scale. Usage: fontscale [1, 2, 3]"},
-        {"inforeg", "Shows the registers values."}
+        {"inforeg", "Shows the registers values."},
+        {"eliminator", "Starts the Eliminator game."}
 };
 
 #define COMMANDS_COUNT (sizeof(commands) / sizeof(commands[0]))
@@ -33,6 +35,7 @@ static int exitCommand(int argc, char * argv[]);
 static int dateCommand(int argc, char * argv[]);
 static int fontscaleCommand(int argc, char * argv[]);
 static int inforegCommand(int argc, char * argv[]);
+static int eliminatorCommand(int argc, char * argv[]);
 static int fillCommandAndArgs(char ** command, char * args[], char * input);
 static void printError(char * command, char * message, char * usage);
 
@@ -45,7 +48,8 @@ static int (*commandFunctions[])(int argc, char * argv[]) = {
     exitCommand,
     dateCommand,
     fontscaleCommand,
-    inforegCommand
+    inforegCommand,
+    eliminatorCommand
 };
 
 static const char * regNames[REGS_AMOUNT] = {
@@ -116,6 +120,13 @@ static int inforegCommand(int argc, char * argv[]) {
         setFontScale(3);
     }
     return OK;
+}
+
+static int eliminatorCommand(int argc, char * argv[]) {
+    //int res = eliminator();
+    //clearScreen();
+    //return res;
+    return eliminator();
 }
 
 static void printError(char * command, char * message, char * usage) {
