@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#define ESC 0x01
+#define ESC 27
 #define BACKSPACE 0x0E
 #define ENTER 0x1C
 #define LSHIFT 0x2A

@@ -20,6 +20,7 @@
 #define USER_SEPARATOR_COLOR 0x005FD700
 
 #define TAB_SIZE 4
+#define ESC 27
 
 static void printUser();
 static void getInputAndPrint(char * input);
@@ -83,14 +84,7 @@ static void getInputAndPrint(char * input) {
             }
             printCursor(CURSOR_COLOR, 0);
         }
-        else if (c != '\b') {
-            // Replace tabs with spaces
-            printCursor(CURSOR_COLOR, getFontWidth());
-            if (i < (MAX_COMMAND_SIZE - 1))
-                input[i++] = c;
-            putchar(c);
-        }
-        else {
+        else if (c == '\b') {
             if (i > 0) {
                 i--;
                 putchar(c);
@@ -98,6 +92,12 @@ static void getInputAndPrint(char * input) {
                 printCursor(SCREEN_COLOR, getFontWidth());
                 printCursor(CURSOR_COLOR, 0);
             }
+        }
+        else if (c != ESC){
+            printCursor(CURSOR_COLOR, getFontWidth());
+            if (i < (MAX_COMMAND_SIZE - 1))
+                input[i++] = c;
+            putchar(c);
         }
     }
     printCursor(SCREEN_COLOR, 0);

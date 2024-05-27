@@ -126,4 +126,10 @@ unsigned int getFontHeight();
  */
 int setFontScale(int scale);
 
+/**
+ * @brief Returns the character in lowercase.
+ * @param c
+ */
+char toLower(char c);
+
 #endif

@@ -123,10 +123,9 @@ static int inforegCommand(int argc, char * argv[]) {
 }
 
 static int eliminatorCommand(int argc, char * argv[]) {
-    //int res = eliminator();
-    //clearScreen();
-    //return res;
-    return eliminator();
+    eliminator();
+    setFontScale(scale);
+    return OK;
 }
 
 static void printError(char * command, char * message, char * usage) {

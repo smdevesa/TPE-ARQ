@@ -250,3 +250,10 @@ unsigned int getFontHeight() {
 int setFontScale(int scale) {
     return _sys_setFontScale(scale);
 }
+
+char toLower(char c) {
+    if(c >= 'A' && c <= 'Z') {
+        return c - 'A' + 'a';
+    }
+    return c;
+}
