@@ -126,4 +126,15 @@ uint64_t _sys_getRegisters(uint64_t * regs);
  */
 uint64_t _sys_sleep(uint64_t millis);
 
+/**
+ * @brief Plays a sound with the given frequency.
+ * @param f the frequency of the sound.
+ */
+uint64_t _sys_playSound(uint64_t f);
+
+/**
+ * @brief Stops the current sound.
+ */
+uint64_t _sys_stopSound();
+
 #endif

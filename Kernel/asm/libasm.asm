@@ -4,6 +4,8 @@ GLOBAL _checkKeyboardBuffer
 GLOBAL _readTime
 GLOBAL _getRegisters
 GLOBAL _updateRegisters
+GLOBAL _outb
+GLOBAL _inb
 
 section .text
 	
@@ -71,6 +73,29 @@ _updateRegisters:
 _getRegisters:
     mov rax, _registersMemory
     ret
+
+; void outb(uint16_t port, uint8_t value)
+_outb:
+    push rdx
+
+    mov dx, di
+    mov al, sil
+    out dx, al
+
+    pop rdx
+    ret
+
+; extern uint8_t inb(uint16_t port)
+_inb:
+    push rdx
+
+    mov dx, di
+    in al, dx
+
+    pop rdx
+    ret
+
+
 
 section .bss
 _registersMemory resq 17

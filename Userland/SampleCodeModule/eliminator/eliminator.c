@@ -134,6 +134,7 @@ static void startGame() {
                 readInput2(&bike1, &bike2);
 
             if (!moveBike(&bike1)) {
+                _sys_playSound(1000);
                 player2Score++;
                 returned = wonGame(numOfPlayers == 1 ? CPU : PLAYER_2);
                 playing = 0;
@@ -145,6 +146,7 @@ static void startGame() {
 
             if (playing) {
                 if (!moveBike(&bike2)) {
+                    _sys_playSound(1000);
                     player1Score++;
                     returned = wonGame(PLAYER_1);
                     playing = 0;

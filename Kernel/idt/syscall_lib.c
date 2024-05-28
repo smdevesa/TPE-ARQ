@@ -1,6 +1,7 @@
 #include <syscall_lib.h>
 #include <videoDriver.h>
 #include <keyboardDriver.h>
+#include <audioDriver.h>
 #include <font.h>
 #include <rtc.h>
 #include <time.h>
@@ -137,4 +138,13 @@ uint64_t sys_sleep(uint64_t millis) {
     }
     // Deactivate interrupts
     _cli();
+    return 1;
+}
+
+uint64_t sys_playSound(uint64_t f) {
+    return playSound(f);
+}
+
+uint64_t sys_stopSound() {
+    return stopSound();
 }
