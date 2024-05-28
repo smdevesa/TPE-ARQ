@@ -14,9 +14,9 @@ uint64_t playSound(uint32_t f) {
     uint32_t div = PIT_FREQUENCY / f;
 
     // Configure PIT
-    _outb(0x43, 0xb6);
-    _outb(0x42, (uint8_t) (div & 0xff));
-    _outb(0x42, (uint8_t) ((div >> 8) & 0xff));
+    _outb(0x43, 0xB6);
+    _outb(0x42, (uint8_t) (div & 0xFF));
+    _outb(0x42, (uint8_t) ((div >> 8) & 0xFF));
 
     // Play sound
     uint8_t aux = _inb(0x61);
