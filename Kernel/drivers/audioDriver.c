@@ -24,6 +24,7 @@ uint64_t playSound(uint32_t f) {
         _outb(0x61, aux | 3);
     }
     return 1;
+    
 }
 
 uint64_t stopSound() {

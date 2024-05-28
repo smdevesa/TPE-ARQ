@@ -99,4 +99,11 @@ uint64_t sys_getRegisters(uint64_t * r);
  */
 uint64_t sys_sleep(uint64_t millis);
 
+/**
+ * @brief Plays a sound with the given frequency.
+ * @param f: frequency of the sound.
+ * @param millis: the amount of milliseconds to last.
+ */
+uint64_t sys_playSound(uint64_t f, uint64_t millis);
+
 #endif

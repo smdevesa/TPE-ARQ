@@ -141,10 +141,9 @@ uint64_t sys_sleep(uint64_t millis) {
     return 1;
 }
 
-uint64_t sys_playSound(uint64_t f) {
-    return playSound(f);
-}
-
-uint64_t sys_stopSound() {
-    return stopSound();
+uint64_t sys_playSound(uint64_t f, uint64_t millis) {
+    playSound(f);
+    sys_sleep(millis);
+    stopSound();
+    return 1;
 }

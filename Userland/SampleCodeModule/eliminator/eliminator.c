@@ -96,6 +96,7 @@ static void CPUInput(TBike * bike);
 static int getDepth(TBike * bike, TDirection direction);
 static int wonGame(TPlayer p);
 static void animatedClear();
+static void playMelody();
 
 int eliminator() {
     startScreen();
@@ -116,6 +117,19 @@ static void startScreen() {
     player2Score = 0;
 }
 
+
+static void playMelody() {
+    
+    uint32_t frequencies[] = {261, 329, 392};
+    uint32_t duration = 100; 
+    uint32_t duration_sleep = 150; 
+
+    for (int i = 0; i < 3; i++) {
+        _sys_playSound(frequencies[i], duration);
+        _sys_sleep(duration_sleep); 
+    }
+}
+
 static void startGame() {
     char returned = 0;
     do {
@@ -134,7 +148,7 @@ static void startGame() {
                 readInput2(&bike1, &bike2);
 
             if (!moveBike(&bike1)) {
-                _sys_playSound(1000);
+                playMelody();
                 player2Score++;
                 returned = wonGame(numOfPlayers == 1 ? CPU : PLAYER_2);
                 playing = 0;
@@ -146,7 +160,7 @@ static void startGame() {
 
             if (playing) {
                 if (!moveBike(&bike2)) {
-                    _sys_playSound(1000);
+                    playMelody();
                     player1Score++;
                     returned = wonGame(PLAYER_1);
                     playing = 0;

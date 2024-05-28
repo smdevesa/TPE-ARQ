@@ -128,13 +128,9 @@ uint64_t _sys_sleep(uint64_t millis);
 
 /**
  * @brief Plays a sound with the given frequency.
- * @param f the frequency of the sound.
+ * @param f: frequency of the sound.
+ * @param millis: the amount of milliseconds to last.
  */
-uint64_t _sys_playSound(uint64_t f);
-
-/**
- * @brief Stops the current sound.
- */
-uint64_t _sys_stopSound();
+uint64_t _sys_playSound(uint64_t f, uint64_t millis);
 
 #endif
