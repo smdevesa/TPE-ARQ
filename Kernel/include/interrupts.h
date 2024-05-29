@@ -18,12 +18,14 @@ void _irq03Handler(void);  // Unused
 void _irq04Handler(void);  // Unused
 void _irq05Handler(void);  // Unused
 
+
 // Software interrupts handlers
 void _irq80Handler(void);  // System calls
 
 
-
+// Exception handlers
 void _exception0Handler(void);
+void _exception6Handler(void);
 
 void _cli(void);
 

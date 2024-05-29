@@ -22,6 +22,8 @@
 #define TAB_SIZE 4
 #define ESC 27
 
+#define DEFAULT_SCALE 1
+
 static void printUser();
 static void getInputAndPrint(char * input);
 static void printCursor(uint32_t hexColor, size_t offsetX);
@@ -30,6 +32,8 @@ static int noScreenSpace();
 static char * username;
 
 void shell() {
+    clearScreen();
+    setFontScale(DEFAULT_SCALE);
     printf(WELCOME_MESSAGE, getDay(), getMonth(), getYear());
     char input[MAX_COMMAND_SIZE];
     char copy[MAX_COMMAND_SIZE];

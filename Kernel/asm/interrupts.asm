@@ -13,12 +13,18 @@ GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
 GLOBAL _irq80Handler
-
+GLOBAL _exception6Handler
 GLOBAL _exception0Handler
+
+GLOBAL _getSnapshot
 
 EXTERN irqDispatcher
 EXTERN syscallDispatcher
 EXTERN exceptionDispatcher
+EXTERN getStackBase
+
+section .rodata
+    userland equ 0x400000
 
 SECTION .text
 
@@ -62,6 +68,34 @@ SECTION .text
 	%endif
 %endmacro
 
+%macro fillSnapshot 0
+    mov [regs], rax
+    mov [regs+8], rbx
+    mov [regs+16], rcx
+    mov [regs+24], rdx
+    mov [regs+32], rsi
+    mov [regs+40], rdi
+    mov [regs+48], rbp
+    mov [regs+56], r8
+    mov [regs+64], r9
+    mov [regs+72], r10
+    mov [regs+80], r11
+    mov [regs+88], r12
+    mov [regs+96], r13
+    mov [regs+104], r14
+    mov [regs+112], r15
+    mov rax, [rsp + 24] ;rsp
+    mov [regs+120], rax
+    mov rax, [rsp] ;rip
+    mov [regs+128], rax
+    mov rax, [rsp+16] ;rflags
+    mov [regs+136], rax
+    mov rax, [rsp+8] ;cs
+    mov [regs+144], rax
+    mov rax, [rsp+32] ;ss
+    mov [regs+152], rax
+%endmacro
+
 %macro irqHandlerMaster 1
 	pushState 1
 
@@ -77,14 +111,29 @@ SECTION .text
 %endmacro
 
 %macro exceptionHandler 1
-	pushState 1
+
+    fillSnapshot
 
 	mov rdi, %1 ; pasaje de parametro
 	call exceptionDispatcher
 
-	popState 1
+	call getStackBase
+
+	mov [rsp+24], rax
+
+	mov rax, userland
+	mov [rsp], rax
+
 	iretq
 %endmacro
+
+
+
+
+_getSnapshot:
+   mov rax, regs
+   ret
+
 
 
 _hlt:
@@ -155,6 +204,10 @@ _irq80Handler:
 _exception0Handler:
 	exceptionHandler 0
 
+;Invalid Opcode Exception
+_exception6Handler:
+    exceptionHandler 6
+
 haltcpu:
 	cli
 	hlt
@@ -164,3 +217,4 @@ haltcpu:
 
 SECTION .bss
 	aux resq 1
+	regs resq 20

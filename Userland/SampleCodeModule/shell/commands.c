@@ -143,7 +143,7 @@ static int exceptionCommand(int argc, char * argv[]){
         printf("c: %d\n", c);
     }
     else if(strcmp(argv[0], "invalidOpcode") == 0) {
-        __asm__("ud2");
+        __asm__("ud2") ; //CAMBIAR ESTOO
     }
     else {
         printError("exception", "Invalid exception type.", "exception [zero, invalidOpcode]");
