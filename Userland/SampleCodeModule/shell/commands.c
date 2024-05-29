@@ -24,7 +24,8 @@ static char * commands[][2] = {
         {"date", "Shows the current date and time."},
         {"fontscale", "Sets the font scale. Usage: fontscale [1, 2, 3]"},
         {"inforeg", "Shows the registers values."},
-        {"eliminator", "Starts the Eliminator game."}
+        {"eliminator", "Starts the Eliminator game."},
+        {"exception", "To test exceptions. Usage: exception [zero, invalidOpcode]"}
 };
 
 #define COMMANDS_COUNT (sizeof(commands) / sizeof(commands[0]))
@@ -38,6 +39,7 @@ static int inforegCommand(int argc, char * argv[]);
 static int eliminatorCommand(int argc, char * argv[]);
 static int fillCommandAndArgs(char ** command, char * args[], char * input);
 static void printError(char * command, char * message, char * usage);
+static int exceptionCommand(int argc, char * argv[]);
 
 // Default scale
 static int scale = 1;
@@ -49,7 +51,8 @@ static int (*commandFunctions[])(int argc, char * argv[]) = {
     dateCommand,
     fontscaleCommand,
     inforegCommand,
-    eliminatorCommand
+    eliminatorCommand,
+    exceptionCommand
 };
 
 static const char * regNames[REGS_AMOUNT] = {
@@ -125,6 +128,27 @@ static int inforegCommand(int argc, char * argv[]) {
 static int eliminatorCommand(int argc, char * argv[]) {
     eliminator();
     setFontScale(scale);
+    return OK;
+}
+
+static int exceptionCommand(int argc, char * argv[]){
+    if(argc != 1 || argv[0] == NULL) {
+        printError("exception", "Invalid amount of arguments.", "exception [zero, invalidOpcode]");
+        return ERROR;
+    }
+    if(strcmp(argv[0], "zero") == 0) {
+        int a = 1;
+        int b = 0;
+        int c = a / b;
+        printf("c: %d\n", c);
+    }
+    else if(strcmp(argv[0], "invalidOpcode") == 0) {
+        __asm__("ud2");
+    }
+    else {
+        printError("exception", "Invalid exception type.", "exception [zero, invalidOpcode]");
+        return ERROR;
+    }
     return OK;
 }
 

@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <lib.h>
 
 void * memset(void * destination, int32_t c, uint64_t length)
 {
@@ -48,3 +49,35 @@ void * memcpy(void * destination, const void * source, uint64_t length)
 
 	return destination;
 }
+
+size_t strlen(const char *str) {
+    size_t len = 0;
+    while(str[len] != 0) {
+        len++;
+    }
+    return len;
+}
+
+void reverse(char *str) {
+    size_t len = strlen(str);
+    for (size_t i = 0; i < len / 2; i++) {
+        char temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+}
+
+char * itoaHex(uint64_t num, char * str) {
+    int i = 0;
+    while (num != 0) {
+        int r = num % 16;
+        str[i++] = (r < 10) ? (r + '0') : (r - 10 + 'A');
+        num /= 16;
+    }
+    str[i] = 0;
+    reverse(str);
+    return str;
+}
+
+
+
