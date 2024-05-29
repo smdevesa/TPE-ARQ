@@ -7,7 +7,7 @@
 
 #include <stddef.h>
 
-#define MAX_COMMAND_SIZE 150
+#define MAX_COMMAND_SIZE 30
 #define MAX_ARGS 3
 
 #define INPUT_ERROR -1

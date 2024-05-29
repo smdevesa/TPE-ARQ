@@ -47,7 +47,8 @@ void shell() {
         }
         printUser();
         getInputAndPrint(input);
-        if(input != NULL && input[0] != '\n') {
+        if(input[0] != 0) {
+            printf("\ninput: %s", input);
             putchar('\n');
             strcpy(copy, input);
             returned = parseCommand(copy);
@@ -74,30 +75,36 @@ void shell() {
 static void getInputAndPrint(char * input) {
     char c;
     int i=0;
+    int count=0;
     printCursor(CURSOR_COLOR, 0);
     while((c = getchar()) != '\n') {
         if (c == '\t') {
             for (int j = 0; j < TAB_SIZE; j++) {
                 putchar(' ');
+                count++;
                 if (i < (MAX_COMMAND_SIZE - 1))
                     input[i++] = ' ';
             }
             printCursor(CURSOR_COLOR, 0);
         }
         else if (c == '\b') {
-            if (i > 0) {
-                i--;
+            if (count > 0) {
+                if(count < MAX_COMMAND_SIZE)
+                    i--;
                 putchar(c);
+                count--;
                 // we need to erase the cursor
                 printCursor(SCREEN_COLOR, getFontWidth());
                 printCursor(CURSOR_COLOR, 0);
             }
+
         }
         else if (c != ESC){
             printCursor(CURSOR_COLOR, getFontWidth());
             if (i < (MAX_COMMAND_SIZE - 1))
                 input[i++] = c;
             putchar(c);
+            count++;
         }
     }
     printCursor(SCREEN_COLOR, 0);
