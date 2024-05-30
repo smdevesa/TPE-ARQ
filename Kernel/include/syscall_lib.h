@@ -106,4 +106,16 @@ uint64_t sys_sleep(uint64_t millis);
  */
 uint64_t sys_playSound(uint64_t f, uint64_t millis);
 
+/**
+ * @brief Sets the background color of the screen.
+ * @param color: the color to set in hexadecimal. Usage: 0x00RRGGBB.
+ */
+uint64_t sys_setBgColor(uint32_t color);
+
+/**
+ * @brief Returns the current background color of the screen.
+ * @return the current background color in hexadecimal. Usage: 0x00RRGGBB.
+ */
+uint64_t sys_getBgColor();
+
 #endif

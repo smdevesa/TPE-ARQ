@@ -52,7 +52,6 @@ void shell() {
         printUser();
         getInputAndPrint(input);
         if(input[0] != 0) {
-            printf("\ninput: %s", input);
             putchar('\n');
             strcpy(copy, input);
             returned = parseCommand(copy);

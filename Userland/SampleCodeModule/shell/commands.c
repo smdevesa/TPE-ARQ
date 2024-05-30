@@ -4,7 +4,7 @@
 
 #include <commands.h>
 #include <iolib.h>
-#include <string.h>
+#include <stringutils.h>
 #include <time.h>
 #include <syscalls.h>
 #include <eliminator.h>
@@ -30,6 +30,7 @@ static char * commands[][2] = {
 
 #define COMMANDS_COUNT (sizeof(commands) / sizeof(commands[0]))
 
+extern void _invalidOp();
 static int helpCommand(int argc, char * argv[]);
 static int clearCommand(int argc, char * argv[]);
 static int exitCommand(int argc, char * argv[]);
@@ -73,6 +74,7 @@ static int clearCommand(int argc, char * argv[]) {
 }
 
 static int exitCommand(int argc, char * argv[]) {
+    clearScreen();
     return EXIT;
 }
 
@@ -143,7 +145,7 @@ static int exceptionCommand(int argc, char * argv[]){
         printf("c: %d\n", c);
     }
     else if(strcmp(argv[0], "invalidOpcode") == 0) {
-        __asm__("ud2") ; //CAMBIAR ESTOO
+        _invalidOp();
     }
     else {
         printError("exception", "Invalid exception type.", "exception [zero, invalidOpcode]");

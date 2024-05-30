@@ -14,10 +14,13 @@
 
 #define WHITE 0x00FFFFFF
 #define BLACK 0x00000000
+#define DEFAULT_BG_COLOR 0x00000000
 
 // Positioning variables
 static uint16_t print_x = 0;
 static uint16_t print_y = 0;
+
+uint32_t bgColor = DEFAULT_BG_COLOR;
 
 static int printSpecialCases(char c);
 
@@ -54,7 +57,7 @@ uint64_t sys_write(int fd, const char * buffer, int count, uint32_t color) {
 
                 // Check if the character is a special case
                 if (!printSpecialCases(buffer[i])) {
-                    drawChar(buffer[i], color, BLACK, print_x, print_y);
+                    drawChar(buffer[i], color, bgColor, print_x, print_y);
                     print_x += getFontWidth() * getScale();
                 }
             }
@@ -83,7 +86,7 @@ static int printSpecialCases(char c) {
                 // Align the cursor to the previous line
                 print_x -= print_x % (getFontWidth() * getScale());
             }
-            drawChar(' ', BLACK, BLACK, print_x, print_y);
+            drawChar(' ', BLACK, bgColor, print_x, print_y);
             return 1;
         default:
             return 0;
@@ -100,7 +103,7 @@ uint64_t sys_getCoords() {
 }
 
 uint64_t sys_clearScreen() {
-    clearScreen();
+    drawRectangle(bgColor, 0, 0, getScreenWidth(), getScreenHeight());
     print_x = 0;
     print_y = 0;
     return 0;
@@ -146,4 +149,13 @@ uint64_t sys_playSound(uint64_t f, uint64_t millis) {
     sys_sleep(millis);
     stopSound();
     return 1;
+}
+
+uint64_t sys_setBgColor(uint32_t color) {
+    bgColor = color;
+    return 1;
+}
+
+uint64_t sys_getBgColor() {
+    return bgColor;
 }
