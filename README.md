@@ -1,4 +1,4 @@
-# Trabajo Práctico Especial - Arquitectura de Computadoras - 2C 2024
+# Trabajo Práctico Especial - Arquitectura de Computadoras - 1C 2024
 ***
 ## Integrantes:
 - Nicolás Ezequiel Revale (64227)
