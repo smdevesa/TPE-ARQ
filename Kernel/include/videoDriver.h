@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 19/05/2024.
-//
-
 #ifndef TPE_ARQ_VIDEODRIVER_H
 #define TPE_ARQ_VIDEODRIVER_H
 

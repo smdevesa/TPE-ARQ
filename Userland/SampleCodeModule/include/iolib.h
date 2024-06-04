@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 20/05/2024.
-//
-
 #ifndef TPE_ARQ_STDIO_H
 #define TPE_ARQ_STDIO_H
 

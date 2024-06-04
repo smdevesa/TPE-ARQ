@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 22/05/2024.
-//
-
 #include <rtc.h>
 
 // We return 64 bits because of the syscall handler but we only need 8 bits

@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 22/05/2024.
-//
-
 #ifndef TPE_ARQ_RTC_H
 #define TPE_ARQ_RTC_H
 

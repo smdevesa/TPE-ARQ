@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 27/05/2024.
-//
-
 #ifndef TPE_ARQ_AUDIODRIVER_H
 #define TPE_ARQ_AUDIODRIVER_H
 

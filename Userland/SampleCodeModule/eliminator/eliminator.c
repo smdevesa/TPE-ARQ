@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 24/05/2024.
-//
-
 #include <eliminator.h>
 #include <iolib.h>
 #include <color.h>

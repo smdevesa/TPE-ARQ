@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 23/05/2024.
-//
-
 #include <time.h>
 #include <stdint.h>
 #include <syscalls.h>

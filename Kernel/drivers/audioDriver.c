@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 27/05/2024.
-//
-
 #include <audioDriver.h>
 
 extern void _outb(uint16_t port, uint8_t value);

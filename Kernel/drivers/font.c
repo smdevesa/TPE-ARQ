@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 19/05/2024.
-//
-
 #include <font.h>
 #include <videoDriver.h>
 

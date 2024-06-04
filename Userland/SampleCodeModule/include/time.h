@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 23/05/2024.
-//
-
 #ifndef TPE_ARQ_TIME_H
 #define TPE_ARQ_TIME_H
 

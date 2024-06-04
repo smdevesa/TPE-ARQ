@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 21/05/2024.
-//
-
 #include <stringutils.h>
 
 size_t strlen(const char *str) {

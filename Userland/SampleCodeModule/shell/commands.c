@@ -1,7 +1,3 @@
-//
-// Created by Santiago Devesa on 22/05/2024.
-//
-
 #include <commands.h>
 #include <iolib.h>
 #include <stringutils.h>
