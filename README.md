@@ -26,7 +26,7 @@
 4. Dentro del contenedor, ejecutar los siguientes comandos:
     - `cd /root/Toolchain`
     - `make all`
-    - `cd /root/Kernel`
+    - `cd /root`
     - `make all`
 5. Salir del contenedor con el comando `exit`
 
