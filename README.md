@@ -32,9 +32,7 @@
 1. Ejecutar el archivo `run.sh` con el comando: `./run.sh` en Linux o macOS.
 Si se desea ejecutar con sonido, ejecutar el archivo `runSound.sh` con el comando: `./runSound.sh` en Linux o macOS.
 
-### Uso de funcionalidades
-
-#### Shell
+### Uso de Shell
 
 Es posible utilizar la shell como un intérprete de comandos. 
 Si bien se puede escribir hasta que se llene la pantalla de caracteres, 
