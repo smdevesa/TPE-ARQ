@@ -21,7 +21,7 @@
 ### Compilación
 
 1. Ejecutar el comando: `docker pull agodio/itba-so:1.0`
-2. Clonar el repositorio: `git@github.com:smdevesa/TPE-ARQ.git`
+2. Clonar el repositorio: `git clone git@github.com:smdevesa/TPE-ARQ.git`
 3. En el directorio del repositorio, ejecutar el comando: `docker run -v ${PWD}:/root --security-opt seccomp:unconfined -ti agodio/itba-so:1.0`
 4. Dentro del contenedor, ejecutar los siguientes comandos:
     - `cd /root/Toolchain`
