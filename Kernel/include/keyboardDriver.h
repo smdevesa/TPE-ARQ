@@ -28,11 +28,10 @@ void keyboard_handler();
 char kb_getchar();
 
 /**
- * @brief Fills the registers array with the current values of the registers.
- * You must update the registers with CTRL + R before calling this function.
- * @param r: the array to fill.
- * @return 1 if the registers were filled, 0 otherwise.
+ * @brief Sets the action to be executed when the user
+ * presses CTRL + R.
+ * @param action: the function to be executed.
  */
-uint64_t getRegisters(uint64_t * r);
+void setCtrlRAction(void (*action)(void));
 
 #endif

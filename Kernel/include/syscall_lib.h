@@ -86,12 +86,10 @@ uint64_t sys_getTime(uint64_t rdi);
 uint64_t sys_setFontScale(uint64_t scale);
 
 /**
- * @brief Fills the registers array with the current values of the registers.
- * Registers must be updated with CTRL + R before calling this function.
- * @param r: the array to fill with the registers. Be sure of having at least REGS_AMOUNT elements.
- * @return 0 if the registers were filled successfully, 1 if the registers were not filled.
+ * @brief Sets the user CTRL + R function.
+ * @param action: the function to set.
  */
-uint64_t sys_getRegisters(uint64_t * r);
+uint64_t sys_setCtrlRAction(void (*action)(void));
 
 /**
  * @brief Sleeps the current process for the given amount of milliseconds.
